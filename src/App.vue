@@ -1,80 +1,101 @@
 <template>
-   <v-app>
-    <v-app-bar app color="blue darken-4" class="white--text" clipped-left>
-      <v-app-bar-nav-icon app color="white" v-on:click="drawer=!drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="header-bar">CaloCalo</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn href="https://feeps.co.jp" color="red" class="white--text" >ログアウト</v-btn>
-    </v-app-bar>
-
-    <v-navigation-drawer app v-model="drawer" color="black" clipped>
-        <div class="top-title">Menu</div>        
-        <v-list>
-          <v-row class="vertical-spacer" justify="center">
-            <v-btn large class="menu-btn"><v-icon>mdi-human-handsdown</v-icon>MyPage</v-btn>
-          </v-row>
-           <v-row class="vertical-spacer" justify="center">
-            <v-btn large class="menu-btn"><v-icon>mdi-file </v-icon>Log</v-btn>
-          </v-row>
-          <v-row class="vertical-spacer" justify="center">
-            <v-btn large class="menu-btn"><v-icon>mdi-cog</v-icon>Setting</v-btn>
-          </v-row>
-        </v-list>
-      </v-navigation-drawer>
-        
-    <v-main>
-      <HelloWorld/>
-    </v-main>
-
-    <v-footer class="blue darken-4" dark app>
-      <p class="reset-css footer-layout">Copyright © 2022 SBチームA. All Rights</p>
-    </v-footer>
-  </v-app>
+  <div id="app">
+    <TopComp />
+    <h2>{{ loginEmpId }}{{ loginPassword }}</h2>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-export default {
+import TopComp from '@/views/users/TopComp.vue'
+
+export default ({
   name: 'App',
   components: {
-    HelloWorld,
+    TopComp
   },
-  data: () => ({
-    drawer: null,
-    items: [
-      {title: 'ホーム', value: 'home'},
-      {title: '会社概要', value: 'company'},
-      {title: 'サービス概要', value: 'inquiry'},
-    ],
-    //
-  }),
-};
+  computed: {
+    loginEmpId() {
+      return this.$store.state.empId;
+    },
+    loginPassword() {
+      return this.$store.state.password;
+    },
+  },
+})
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .reset-css {
   margin: 0;
   padding: 0;
+  text-decoration: none;
   box-sizing: border-box;
 }
-.top-title {
-  color: white;
-  text-align: center;
-  font-size: 30px;
-  padding: 10px 0 60px 0;
+hr{
+  height: 60px;
+  width: .1vw;
+  border-width: 0;
+  color:#000;
+  background-color:#000;
 }
-.logout-btn {
-  color: white;
-  font-size: 20px;
+.link-hover:hover {
+  color: darkgray !important;
 }
-.vertical-spacer {
-  padding-bottom: 60px;
+.main-title {
 }
-.menu-btn {
-  margin: 0 auto;
+.main-bg {
+  position: relative;
+  height: 90vh;
+  background-image: url("@/assets/calocalo-top.jpeg");
+  background-size: cover;
+}
+.main-bg-blur {
+  height: 90vh;
+  background: rgba(255,255,255,0.5);
+}
+.main-contents {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+.signup-content {
+  margin: 0 50px 10px 0;
+}
+.login-content {
+  opacity: none;
+  font-weight: bold;
+  margin: 0 0 10px 50px
 }
 .footer-layout {
   width: 100%;
   text-align: center;
 }
 </style>
+
+<!-- 初期のApp.vue(template)のコード
+<div id="app">
+    <nav>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </nav>
+    <router-view/>
+  </div> -->
+
+<!-- 初期のApp.vue(style)のコード
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+nav {
+  padding: 30px;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+    &.router-link-exact-active {
+      color: red;
+    }
+  }
+} -->
