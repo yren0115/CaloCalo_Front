@@ -5,11 +5,12 @@
         <h1 class="display-1">ログイン</h1>
       </v-card-title>
        <v-card-text>
-        <v-form v-on:submit.prevent="submit()">
-          <v-text-field prepend-icon="mdi-account-circle" label="社員番号" v-model="empId"/>
-          <v-text-field v-bind:type="showPassword ? 'text' : 'password'" prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"  label="パスワード" @click:append="showPassword = !showPassword" v-model="password"/>
+        <v-form v-on:submit.prevent="submit">
+          <v-text-field prepend-icon="mdi-account-circle" label="社員番号" :value="empId" v-model="user.empId" />
+          <h3>{{ empId }}</h3>
+          <v-text-field v-bind:type="showPassword ? 'text' : 'password'" prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"  label="パスワード" @click:append="showPassword = !showPassword" v-model="user.password"/>
           <v-card-actions>
-            <v-btn class="light-blue" @click ="login">ログイン</v-btn>
+            <v-btn class="light-blue" type="submit">ログイン</v-btn>
           </v-card-actions>
         </v-form>
     </v-card-text>
@@ -22,21 +23,27 @@ export default {
   name: 'App',
   data: ()=> ({
     showPassword: false,
-    empId:'',
-    password:'',
+    // empId:'123',
+    // password:'qazplm',
+    user: {},
   }),
   computed: {
-    getUserInfo() {
-      return this.$store.getters['updateEmpId'];
+    getempId() {
+      return this.$store.state.empId;
     },
-    setUserInfo(value) {
-      return this.$store.commit('updateEmpId', value);
+    getpassword() {
+      return this.$store.state.password;
     },
   },
   methods: {
       submit() {
-        this.$store.commit('updateEmpId')
+        this.$store.dispatch("auth", {
+          empId: this.user.empId,
+          password: this.user.password,
+        });
+        this.$router.push('/mypage');
       },
+
       login: function() {
         this.$router.push('/mypage')
       },

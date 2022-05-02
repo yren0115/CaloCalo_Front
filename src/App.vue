@@ -1,17 +1,24 @@
 <template>
   <div id="app">
-    <TopComp />
+    <div v-if="loginEmpId === '0' && loginPassword === 'qazplm'">
+      <TopComp />
+    </div>
+    <div v-else>
+      <MyPage />
+    </div>
     <h2>{{ loginEmpId }}{{ loginPassword }}</h2>
   </div>
 </template>
 
 <script>
 import TopComp from '@/views/users/TopComp.vue'
+import MyPage from '@/views/users/MyPage.vue'
 
 export default ({
   name: 'App',
   components: {
-    TopComp
+    TopComp,
+    MyPage,
   },
   computed: {
     loginEmpId() {
@@ -19,7 +26,7 @@ export default ({
     },
     loginPassword() {
       return this.$store.state.password;
-    },
+    }
   },
 })
 </script>
