@@ -6,9 +6,12 @@
         <v-toolbar-title>CaloCalo <v-icon x-large color="#E53935">mdi-fire</v-icon></v-toolbar-title>
       </router-link>
       </v-app-bar>
+
+      
       <v-main class="main-bg">
         <v-row class="text-center main-bg-blur">
           <v-col>
+
             <h1 class="main-title">CaloCalo</h1>
             <div class="main-contents">
               <div class="signup-content">
