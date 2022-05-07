@@ -1,20 +1,28 @@
 <template>
   <div id="app">
     <div v-if="loginEmpId === '0' && loginPassword === 'qazplm'">
-      <TopComp />
+      <div v-if="this.$route.path === '/'">
+        <TopComp />
+      </div>
+      <div v-else-if="this.$route.path === '/signup'">
+        <SignUp />
+      </div>
+      <div v-else-if="this.$route.path === '/login'">
+        <LogIn />
+      </div>
     </div>
-    <!-- <div v-else-if >
-    </div> -->
     <div v-else>
       <MyPage />
     </div>
-    <h2>{{ loginEmpId }}{{ loginPassword }}</h2>
   </div>
 </template>
 
 <script>
 import TopComp from '@/views/users/TopComp.vue'
 import MyPage from '@/views/users/MyPage.vue'
+import SignUp from '@/views/users/SignUp.vue'
+import LogIn from '@/views/users/LogIn.vue'
+
 
 export default ({
   name: 'App',
@@ -25,6 +33,8 @@ export default ({
   components: {
     TopComp,
     MyPage,
+    SignUp,
+    LogIn,
   },
   computed: {
     loginEmpId() {
@@ -32,12 +42,18 @@ export default ({
     },
     loginPassword() {
       return this.$store.state.password;
-    }
+    },
   },
   methods: {
-    getCurUrl() {
-     return this.$routes.path;
+    getTopUrl() {
+     return location.pathname.match("/");
     },
+    getSignupUrl() {
+      return location.pathname.match("/signup");
+    },
+    getLoginUrl() {
+      return location.pathname.match("/login");
+    }
   },
 })
 </script>

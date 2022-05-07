@@ -1,53 +1,43 @@
 <template>
   <v-app>
-    <v-container>
       <v-app-bar app color="blue darken-4" class="white--text" clipped-left>
       <router-link to="/" class="white--text link-hover" style="text-decoration: none;">
         <v-toolbar-title>CaloCalo <v-icon x-large color="#E53935">mdi-fire</v-icon></v-toolbar-title>
       </router-link>
       </v-app-bar>
 
-      
       <v-main class="main-bg">
-        <v-row class="text-center main-bg-blur">
-          <v-col>
-
-            <h1 class="main-title">CaloCalo</h1>
-            <div class="main-contents">
-              <div class="signup-content">
-                <h3>初めてご利用される方<br />
-                  <router-link to="/signup">
-                    <v-btn color="light-green" raised><v-icon>mdi-account-multiple-plus-outline</v-icon>新規登録</v-btn>
-                  </router-link>
-                </h3>
+        <v-container fluid>
+          <v-row class="text-center main-bg-blur">
+            <v-col>
+              <h1 class="main-title">CaloCalo</h1>
+              <div class="main-contents">
+                <div class="signup-content">
+                  <h3>初めてご利用される方<br />
+                    <router-link to="/signup">
+                      <v-btn color="light-green"  raised><v-icon>mdi-account-multiple-plus-outline</v-icon>新規登録</v-btn>
+                    </router-link>
+                  </h3>
+                </div>
+                <div>
+                  <hr>
+                </div>
+                <div class="login-content">
+                  <h3>既に登録がお済みの方<br />
+                    <router-link to="/login">
+                      <v-btn  class="light-blue"><v-icon>mdi-login-variant</v-icon>ログイン</v-btn>
+                    </router-link>
+                  </h3>
+                </div>
               </div>
-              <div>
-                <hr>
-              </div>
-              <div class="login-content">
-                <h3>既に登録がお済みの方<br />
-                  <router-link to="/login">
-                    <v-btn class="light-blue"><v-icon>mdi-login-variant</v-icon>ログイン</v-btn>
-                  </router-link>
-                </h3>
-              </div>
-            </div>
-
-            <div class="router-components">
-
-              <router-view></router-view>
-
-            </div>
-            
-          </v-col>
-        </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-main>
-
+      
       <v-footer app class="blue darken-4" dark>
         <p class="reset-css footer-layout">Copyright © 2022 SBチームA. All Rights</p>
       </v-footer>
-    </v-container>
-    
   </v-app>
 </template>
 

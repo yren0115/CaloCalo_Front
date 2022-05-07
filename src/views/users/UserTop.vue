@@ -9,9 +9,11 @@
               </v-textarea>
                 <div class="btn-container">
                   <v-btn class="mr-4" v-on:click="submit">SUBMIT</v-btn>
-                  <v-btn v-on:click="clear">CLEAR</v-btn>
+                  <v-btn v-on:click="getCoinInfo">CLEAR</v-btn>
                 </div>
               </v-form>
+              <h3>取得コイン情報:{{ info }}</h3>
+
               <v-label><h2 class="left-title-sub">本日の摂取カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
                 <h1 class="goal-cal-disp">{{ getintakeCalorie }}kcal</h1>
@@ -38,8 +40,11 @@
         </v-row>
   </v-container>
 </template>
-
+<!-- user.intakeCalorie -->
 <script>
+import axios from "axios";
+
+const url = 'https://jsonplaceholder.typicode.com/users/'
 
 export default {
   name: 'UserTop',
@@ -49,6 +54,9 @@ export default {
     drawer: null,
     user: {},
     menuflag: 0,
+    userId: '',
+    userName: '',
+    info: null,
   }),
    computed: {
     getintakeCalorie: function() {
@@ -77,7 +85,33 @@ export default {
     clear() {
       this.$refs.form.reset();
     },
+    getUserName() {
+      var vm = this
+      axios
+      .get(url + this.userId)
+      .then(function (response) {
+        vm.userName = response.data.name
+      }).catch(function () {
+        this.userName = "不正なユーザーID"
+      })
+    },
+    getCoinInfo() {
+      axios
+        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+        .then( response => this.info = response.data)
+        .catch(function () {
+          this.info = "不正なコイン情報です"
+        })
+    },
   },
+  watch: {
+    userId: function() {
+      this.getUserName()
+    },
+    info: function() {
+      this.getCoinInfo()
+    }
+  }
 };
 </script>
 
