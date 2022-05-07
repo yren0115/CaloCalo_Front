@@ -6,8 +6,10 @@
             <v-form ref="form">
             <v-label><h2 class="left-title">本日の摂取カロリー入力欄</h2></v-label>
             <!-- pulldown  -->
-              <v-textarea solo name="input-7-4" label="摂取カロリーを入力" v-model="user.intakeCalorie">
-              </v-textarea>
+              <v-select :items="foodList" label="摂取した食品を選択してください" dense outlined v-model="user.selectFood">
+              </v-select>
+              <!-- <v-textarea solo name="input-7-4" label="摂取カロリーを入力" v-model="user.intakeCalorie">
+              </v-textarea> -->
               <!-- pulldown  -->
                 <div class="btn-container">
                   <v-btn class="mr-4" v-on:click="fetchFoodList">SUBMIT</v-btn>
