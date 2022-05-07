@@ -13,6 +13,9 @@
               <h1 class="main-title">CaloCalo</h1>
               <div class="main-contents">
                 <v-card width="400px" class="mx-auto mt-5">
+
+                  <err-msg v-if="err">社員番号かIDが間違っています。</err-msg>
+
                   <v-card-title>
                     <h1 class="display-1">ログイン</h1>
                   </v-card-title>
