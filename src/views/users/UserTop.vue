@@ -10,11 +10,11 @@
               </v-textarea>
               <!-- pulldown  -->
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="submit">SUBMIT</v-btn>
-                  <v-btn v-on:click="getCoinInfo">CLEAR</v-btn>
+                  <v-btn class="mr-4" v-on:click="getFoodlist">SUBMIT</v-btn>
                 </div>
               </v-form>
-              <h3>取得コイン情報:{{ info }}</h3>
+              <h3>food list取得:</h3>
+              <p v-for="food in foodList" v-bind:key="food.id">{{food.name}}</p><br>
 
               <v-label><h2 class="left-title-sub">本日の摂取カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
@@ -46,7 +46,7 @@
 <script>
 import axios from "axios";
 
-const url = 'https://jsonplaceholder.typicode.com/users/'
+const url = 'http://localhost:3000/sites'
 
 export default {
   name: 'UserTop',
@@ -59,6 +59,7 @@ export default {
     userId: '',
     userName: '',
     info: null,
+    foodList:[]
   }),
    computed: {
     getintakeCalorie: function() {
@@ -105,6 +106,18 @@ export default {
           this.info = "不正なコイン情報です"
         })
     },
+
+    getFoodlist() {
+      var vm = this
+      axios
+      .get(url)
+      .then(function (response) {
+        vm.foodList = response.data.food_list
+      }).catch(function () {
+
+      })
+    },
+
   },
   watch: {
     userId: function() {
@@ -115,6 +128,8 @@ export default {
     }
   }
 };
+
+
 </script>
 
 <style scoped>
