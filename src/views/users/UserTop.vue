@@ -5,21 +5,22 @@
           <div class="form-container">
             <v-form ref="form">
             <v-label><h2 class="left-title">本日の摂取カロリー入力欄</h2></v-label>
-              <v-textarea solo name="input-7-4" label="摂取カロリーを入力" v-model="user.intakeCalorie">
-              </v-textarea>
+
+              <!-- <v-textarea solo name="input-7-4" label="摂取カロリーを入力" v-model="user.intakeCalorie">
+              </v-textarea> -->
+              <v-select :items="items" label="摂取した食品を選択してください" dense outlined v-model="user.selectFood">
+              </v-select>
                 <div class="btn-container">
                   <v-btn class="mr-4" v-on:click="submit">SUBMIT</v-btn>
                   <v-btn v-on:click="getCoinInfo">CLEAR</v-btn>
                 </div>
               </v-form>
-              <h3>取得コイン情報:{{ info }}</h3>
-
               <v-label><h2 class="left-title-sub">本日の摂取カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
                 <h1 class="goal-cal-disp">{{ getintakeCalorie }}kcal</h1>
               </v-sheet>
               <div class="result"><h2></h2></div>
-            </div>
+          </div>
           </v-col>
           <v-col cols="7" class="">
             <div class="output-container">
@@ -57,6 +58,11 @@ export default {
     userId: '',
     userName: '',
     info: null,
+    items: [
+      'ポテトチップス',
+      'カロリーメイト',
+      'ソイジョイ',
+    ],
   }),
    computed: {
     getintakeCalorie: function() {
@@ -145,7 +151,7 @@ export default {
 .left-title-sub {
   color: black;
   text-align: center;
-  padding: 50px 0;
+  padding: 163px 0 50px;
 }
 .form-container {
   height: 90vh;
