@@ -10,12 +10,13 @@
               </v-textarea>
               <!-- pulldown  -->
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="getFoodlist">SUBMIT</v-btn>
+                  <v-btn class="mr-4" v-on:click="fetchFoodList">SUBMIT</v-btn>
                 </div>
               </v-form>
+              <!--  -->
               <h3>food list取得:</h3>
-              <p v-for="food in foodList" v-bind:key="food.id">{{food.name}}</p><br>
-
+              <option v-for="food in foodList" v-bind:key="food.id" v-on:change="selectedFoodId = $event.target.food.id" v-bind="food.name"></option><br>
+              <!--  -->
               <v-label><h2 class="left-title-sub">本日の摂取カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
                 <h1 class="goal-cal-disp">{{ getintakeCalorie }}kcal</h1>
@@ -59,7 +60,8 @@ export default {
     userId: '',
     userName: '',
     info: null,
-    foodList:[]
+    foodList:[],
+    selectedFoodId:null
   }),
    computed: {
     getintakeCalorie: function() {
@@ -107,7 +109,7 @@ export default {
         })
     },
 
-    getFoodlist() {
+    fetchFoodList() {
       var vm = this
       axios
       .get(url)
@@ -117,6 +119,19 @@ export default {
 
       })
     },
+
+    setFoodId() {
+      var vm = this
+      // this.selectedFoodId = 
+    },
+
+   fetchGoalCalories()  {
+
+   }, 
+
+   foodCalories()  {
+
+   }, 
 
   },
   watch: {
