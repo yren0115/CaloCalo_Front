@@ -30,7 +30,7 @@ export default new Vuex.Store({
     setcalo(context, user) {
       context.commit('setCalorie', user)
     },
-    setGoalCalo(context, user) {
+    setgoalcalo(context, user) {
       context.commit('setGoalCalo', user)
     },
   },

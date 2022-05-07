@@ -12,10 +12,10 @@
             <div class="lower-container">
               <v-label><h2 class="lower-title">目標カロリーを入力してください</h2></v-label>
               <v-form ref="form">
-                <v-textarea solo name="input-7-4" rows="10"  label="目標カロリーを入力" v-model="user.goalCalorie">
+                <v-textarea solo height="200px" name="input-7-4" label="目標カロリーを入力" v-model="user.goalCalorie">
                 </v-textarea>
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="submitGoalCalo" type="submit">SUBMIT</v-btn>
+                  <v-btn class="mr-4" v-on:click="submitGoalCalo(); clear()">SUBMIT</v-btn>
                 </div>
               </v-form>
             </div>
@@ -27,7 +27,7 @@
 <script>
 
 export default ({
-  name: 'UserLog',
+  name: 'UserSet',
   components: {
   },
   data: ()=> ({
@@ -39,7 +39,7 @@ export default ({
     getintakeCalorie: function() {
       return this.$store.state.intakeCalorie;
     },
-    getgoalCalorie: function() {
+    getoalCalorie: function() {
       return this.$store.state.goalCalorie;
     },
   },
@@ -50,9 +50,9 @@ export default ({
       });
     },
     submitGoalCalo() {
-      this.$store.dispatch("setGoalCalo", {
+      this.$store.dispatch("setgoalcalo", {
         goalCalorie: this.user.goalCalorie,
-      })
+      });
     },
     clear() {
       this.$refs.form.reset();
