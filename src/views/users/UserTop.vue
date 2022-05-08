@@ -5,7 +5,7 @@
           <div class="form-container">
             <v-form ref="form">
             <v-label><h2 class="left-title">本日の摂取カロリー入力欄</h2></v-label>
-              <v-select :items="foodList" label="摂取した食品を選択してください" dense outlined v-on:input="">
+              <v-select :items="foodList" label="摂取した食品を選択してください" dense outlined v-on:change="setIntakeFood($event.target.value)">
               </v-select>
               <!-- <select id="food-list">
               <option v-for="food in foodList" v-bind:key="food.id" v-on:change="selectedFoodId = $event.target.food.id" v-bind="food.name"></option><br>
@@ -13,7 +13,7 @@
               <!-- <v-textarea solo name="input-7-4" label="摂取カロリーを入力" v-model="user.intakeCalorie">
               </v-textarea> -->
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="submitCalorie" >記録する</v-btn>
+                  <v-btn class="mr-4" v-on:click="submitCalorie" >submit</v-btn>
                 </div>
               </v-form>
               <!--  -->
@@ -54,7 +54,7 @@ const CONTEXT_PATH = "calocalo/";
 
 const BASE_URL = DOMAINE + CONTEXT_PATH;
 const EMP_GOAL_URL = `employee/info/`;
-const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
+// const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
 const EMP_SUBMIT_RECORD_URL = 'submit/food/'
 import axios from "axios";
 
@@ -65,7 +65,7 @@ export default {
   created:function() {
     var vm = this;
     vm.fetchFoodList();
-    vm.fetchGoalCalories();
+    // vm.fetchGoalCalories();
   },
   components: {
   },
@@ -75,9 +75,9 @@ export default {
     menuflag: 0,
     // info: null,
     foodList:[],
-    foodListObject:[],
+    foodListObject:{},
     selectedFoodId:null,
-    foodName,
+    foodName:null,
     food:{name:null, id:null, calorie:null}
   }),
    computed: {
@@ -115,15 +115,15 @@ export default {
     //     .catch(function () {
     //       this.info = "不正なコイン情報です"
     //     })
-    },
-
+    // },
     fetchFoodList() {
       var vm = this
       axios
       .get(url)
       .then(function (response) {
         vm.foodListObject = response.data.food_list
-        for (var i = 0; i < foodListObject.length; i++) {
+        console.log(vm.foodListObject.length)
+        for (var i = 0; i < vm.foodListObject.length; i++) {
         vm.foodList.push(vm.foodListObject[i].name)
         }
 
@@ -140,25 +140,26 @@ export default {
     //     }
     //   }
     // },
-    setIntakeFood(){
-      for (var i = 0; i < this.foodListObject.length; i++) {
-        if (this.foodListObject[i].name === this.foodName){
-          this.food.id = this.foodListObject[i].id;
-          this.food.calorie = this.foodListObject[i].calorie;
-          this.food.name = this.foodListObject[i].name;
+    setIntakeFood(foodName){
+      var vm = this
+      for (var i = 0; i < vm.foodListObject.length; i++) {
+        if (vm.foodListObject[i].name === foodName){
+          vm.food.id = vm.foodListObject[i].id;
+          vm.food.calorie = vm.foodListObject[i].calorie;
+          vm.food.name = vm.foodListObject[i].name;
           break;
         }
       }
 
     },
 
-    displayCalories() {
-      this.()
-      this.()
+    // displayCalories() {
+    //   this.()
+    //   this.()
 
       
 
-    },
+    // },
 
 
     // setFoodId() {
@@ -168,9 +169,12 @@ export default {
 
    fetchGoalCalories()  {
       var vm = this
-      axios.get(BASE_URL +EMP_GOAL_URL+sessionStorage.getItem('emp_id'))
+      // axios.get(BASE_URL +EMP_GOAL_URL+sessionStorage.getItem('emp_id'))
+      axios.get(url)
       .then(function (response) {
-        vm.getgoalCalorie = response.data.goal_calorie
+        vm.$store.dispatch("setGoalCalo", {
+        goalCalorie: response.data.goal_calorie
+        })
       }).catch(function () {
 
       })
@@ -183,7 +187,7 @@ export default {
 
    submitCalorie(){
     var calorieObj = {calorie: null, date: new Date().toISOString().substring(0,10)}
-    if (this.food.id === fasle) {
+    if (this.food.id === false) {
       return 
     }else{
       calorieObj.calorie =  this.food.calorie;
@@ -198,13 +202,14 @@ export default {
 
    },
 
-  watch: {
-    userId: function() {
-      this.getUserName()
-    },
-    info: function() {
-      this.getCoinInfo()
-    }
+  // watch: {
+  //   // userId: function() {
+  //   //   this.getUserName()
+  //   // },
+  //   // info: function() {
+  //   //   this.getCoinInfo()
+  //   // }
+  // }
   }
 };
 
