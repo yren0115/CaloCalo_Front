@@ -155,19 +155,30 @@ export default {
    }, 
 
    submitCalorie(){
+    var vm = this;
     var calorieObj = {calorie: null, date: new Date().toISOString().substring(0,10)}
     if (this.food.id === false) {
       return 
     }else{
       calorieObj.calorie =  this.food.calorie;
+    //axios.put(submit/food/{emp_id})
       axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + sessionStorage.getItem('emp_id'), calorieObj)
       .then(() => {
-        // calorie displayed get Intakecalo called 
-        
+        // calorie displayed get Intakecalo called
+        vm.fetchTotalCalorie();        
       })
 
-    //axios.put(submit/food/{emp_id})
+
     }
+
+   },
+   fetchTotalCalorie(){
+      var vm = this;
+    //axios.put(submit/food/{emp_id})
+      axios.get(BASE_URL + EMP_INTAKE_CALO_URL + sessionStorage.getItem('emp_id'))
+      .then((res) => {
+        vm.user.total = res.data.total_calorie; // remporaly variable vm.user.total;
+      })
 
    },
 
