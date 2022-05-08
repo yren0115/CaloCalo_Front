@@ -139,10 +139,11 @@ export default {
       // axios.get(BASE_URL +EMP_GOAL_URL+sessionStorage.getItem('emp_id'))
       axios.get(url + emp_id)
       .then(function (response) {
+        // not change reactively 
         vm.$store.dispatch("setGoalCalo", {
         goalCalorie: response.data.goal_calorie
         })
-        console.log(response.data.goal_calorie);
+        console.log(response.data.goal_calorie); // tadasii
       }).catch(function () {
 
       })
