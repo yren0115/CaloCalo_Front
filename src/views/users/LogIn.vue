@@ -14,16 +14,21 @@
               <div class="main-contents">
                 <v-card width="400px" class="mx-auto mt-5">
 
-                  <err-msg v-if="err">社員番号かIDが間違っています。</err-msg>
+                  <p v-show="loginFailed">社員番号かIDが間違っています。</p>
 
                   <v-card-title>
                     <h1 class="display-1">ログイン</h1>
                   </v-card-title>
                   <v-card-text>
                     <v-form v-on:submit.prevent="submit">
+                    <!-- emp no ########################  -->
                       <v-text-field prepend-icon="mdi-account-circle" label="社員番号" :value="empId"  v-model="user.empId" />
                       <h3>{{ empId }}</h3>
-                      <v-text-field v-bind:type="showPassword ? 'text' : 'password'"            prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' :            'mdi-eye-off'"  label="パスワード" @click:append="showPassword          =!showPassword"     v-model="user.password"/>
+
+                      <v-text-field v-bind:type="showPassword ? 'text' : 'password'" 
+                      prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' :'mdi-eye-off'"  
+                      label="パスワード" @click:append="showPassword=!showPassword" v-model="user.password"/>
+
                       <v-card-actions>
                         <v-btn class="light-blue" type="submit">ログイン</v-btn>
                       </v-card-actions>
@@ -51,6 +56,7 @@ export default {
   data: ()=> ({
     showPassword: false,
     user: {},
+    loginStatus:false,
   }),
   computed: {
     getempId() {
@@ -59,16 +65,50 @@ export default {
     getpassword() {
       return this.$store.state.password;
     },
+    loginFailed() {
+      return this.loginStatus;
+    },
   },
   methods: {
       submit() {
+        // fix here 
+        var vm = this;
         this.$store.dispatch("auth", {
           empId: this.user.empId,
           password: this.user.password,
         });
-        this.$router.push('/usertop');
+        sessionStorage.setItem('emp_id', this.user.empId);
+        var loginInfo = {
+          password:vm.user.password
+        }
+        vm.loginAuth(loginInfo, vm.user.empId);
       },
-
+      loginAuth(loginInfo, emp_id) {
+        var vm = this;
+        // axios.post(BASE_URL + LOGIN_URL + emp_id, loginInfo)
+        axios.post(url + emp_id, loginInfo)
+        .then( res => {
+          if (res.data.login){
+            if (res.data.admin === ADMIN_CODE){
+            //  admin transition まだルート作ってない
+            vm.$router.push('/admin');
+           }else{
+            vm.$router.push('/usertop');
+           }
+          }else{
+        //　ログイン失敗処理
+              vm.loginStatus = true;
+              // empIdをどうやって空にするか
+              vm.user.empId = null;
+              vm.user.password = '';
+              return;
+          }
+          })
+          .catch((err) => {
+          // set err
+          // err = err
+          })
+        },
       login: function() {
         this.$router.push('/usertop')
       },
