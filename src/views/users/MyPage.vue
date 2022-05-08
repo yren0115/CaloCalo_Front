@@ -10,7 +10,6 @@
     <v-navigation-drawer app v-model="drawer" color="black" clipped>
       <div class="top-title">Menu</div>
       <v-list>
-
         <v-row class="vertical-spacer" justify="center">
           <v-btn large class="menu-btn" v-on:click="subst0"><v-icon>mdi-human-handsdown</v-icon>MyPage</v-btn>
         </v-row>
@@ -74,7 +73,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch("auth", {
+      this.$store.dispatch("outh", {
         empId: '0',
         password: 'qazplm',
       });

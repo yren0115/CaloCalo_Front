@@ -8,13 +8,19 @@ export default new Vuex.Store({
   state: {
     empId: '0',
     password:'qazplm',
-    goalCalorie: 500,
+    goalCalorie: 0,
     intakeCalorie: 0,
+    selectFood: null,
   },
   mutations: {
     updateUser(state, user) {
       state.empId = user.empId;
       state.password = user.password;
+      state.goalCalorie = user.goalCalorie
+    },
+    destroyUser(state, user) {
+      state.empId = user.empId
+      state.password = user.password
     },
     setCalorie(state, user) {
       state.intakeCalorie = user.intakeCalorie;
@@ -27,11 +33,14 @@ export default new Vuex.Store({
     auth(context, user) {
       context.commit('updateUser', user);
     },
+    outh(context, user) {
+      context.commit('destroyUser', user);
+    },
     setcalo(context, user) {
-      context.commit('setCalorie', user)
+      context.commit('setCalorie', user);
     },
     setgoalcalo(context, user) {
-      context.commit('setGoalCalo', user)
+      context.commit('setGoalCalo', user);
     },
   },
   getters: {
