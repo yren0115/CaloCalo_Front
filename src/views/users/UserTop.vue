@@ -53,19 +53,19 @@ const DOMAINE = 'http://localhost:80/';
 const CONTEXT_PATH = "calocalo/";
 
 const BASE_URL = DOMAINE + CONTEXT_PATH;
-const EMP_GOAL_URL = `employee/info/`;
+// const EMP_GOAL_URL = `employee/info/`;
 // const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
 const EMP_SUBMIT_RECORD_URL = 'submit/food/'
 import axios from "axios";
 
-const url = 'http://localhost:3000/sites'
+const url = 'http://localhost:3000/sites/'
 
 export default {
   name: 'UserTop',
   created:function() {
     var vm = this;
-    vm.fetchFoodList();
-    // vm.fetchGoalCalories();
+    // vm.fetchFoodList();
+    vm.fetchGoalCalories(sessionStorage.getItem('emp_id'));
   },
   components: {
   },
@@ -73,12 +73,12 @@ export default {
     drawer: null,
     user: {},
     menuflag: 0,
-    // info: null,
     foodList:[],
     foodListObject:{},
     selectedFoodId:null,
     foodName:null,
-    food:{name:null, id:null, calorie:null}
+    food:{name:null, id:null, calorie:null},
+
   }),
    computed: {
     getintakeCalorie: function() {
@@ -108,14 +108,6 @@ export default {
       this.$refs.form.reset();
     },
 
-    // getCoinInfo() {
-    //   axios
-    //     .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-    //     .then( response => this.info = response.data)
-    //     .catch(function () {
-    //       this.info = "不正なコイン情報です"
-    //     })
-    // },
     fetchFoodList() {
       var vm = this
       axios
@@ -128,18 +120,8 @@ export default {
         }
 
       }).catch(function () {
-
       })
-
     },
-    // addIntakeCalorieById(){
-    //   for (var i = 0; i < this.foodListObject.length; i++) {
-    //     if (this.foodListObject[i].id === this.selectedFoodId){
-    //       this.getintakeCalorie += this.foodListObject[i].calorie;
-    //       break;
-    //     }
-    //   }
-    // },
     setIntakeFood(foodName){
       var vm = this
       for (var i = 0; i < vm.foodListObject.length; i++) {
@@ -150,31 +132,17 @@ export default {
           break;
         }
       }
-
     },
 
-    // displayCalories() {
-    //   this.()
-    //   this.()
-
-      
-
-    // },
-
-
-    // setFoodId() {
-    //   var vm = this
-    //   // this.selectedFoodId = 
-    // },
-
-   fetchGoalCalories()  {
+   fetchGoalCalories(emp_id)  {
       var vm = this
       // axios.get(BASE_URL +EMP_GOAL_URL+sessionStorage.getItem('emp_id'))
-      axios.get(url)
+      axios.get(url + emp_id)
       .then(function (response) {
         vm.$store.dispatch("setGoalCalo", {
         goalCalorie: response.data.goal_calorie
         })
+        console.log(response.data.goal_calorie);
       }).catch(function () {
 
       })

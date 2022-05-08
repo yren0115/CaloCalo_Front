@@ -14,7 +14,6 @@
               <div class="main-contents">
                 <v-card width="400px" class="mx-auto mt-5">
 
-                  <err-msg v-if="err">社員番号かIDが間違っています。</err-msg>
 
                   <v-card-title>
                     <h1 class="display-1">ログイン</h1>
@@ -66,28 +65,9 @@ export default {
           empId: this.user.empId,
           password: this.user.password,
         });
+        sessionStorage.setItem('emp_id',1);
         this.$router.push('/usertop');
       },
-
-      login: function() {
-        this.$router.push('/usertop')
-      },
-
-      // err: function() {
-        
-      // },
-
-    //       getUserName() {
-    //   var vm = this
-    //   axios
-    //   .get(url + this.userId)
-    //   .then(function (response) {
-    //     vm.userName = response.data.name
-    //   }).catch(function () {
-    //     this.userName = "不正なユーザーID"
-    //   })
-    // },
-
   },
 };
 </script>
