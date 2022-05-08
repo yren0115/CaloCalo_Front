@@ -73,39 +73,23 @@ export default {
         this.$router.push('/usertop')
       },
 
-      err: function() {
+      // err: function() {
         
-      },
+      // },
 
-          getUserName() {
-      var vm = this
-      axios
-      .get(url + this.userId)
-      .then(function (response) {
-        vm.userName = response.data.name
-      }).catch(function () {
-        this.userName = "不正なユーザーID"
-      })
-    },
+    //       getUserName() {
+    //   var vm = this
+    //   axios
+    //   .get(url + this.userId)
+    //   .then(function (response) {
+    //     vm.userName = response.data.name
+    //   }).catch(function () {
+    //     this.userName = "不正なユーザーID"
+    //   })
+    // },
 
   },
 };
-
-const DOMAINE = 'http://localhost:80/';
-const CONTEXT_PATH = "calocalo/";
-
-const BASE_URL = DOMAINE + CONTEXT_PATH;
-const LOGIN_URL= `login/`;
-const SIGNUP_URL= `signup/`;
-const EMP_GOAL_URL = `employee/info/`;
-const EMP_INTAKE_CALO_URL_URL = `employee/take_calorie/`;
-const SETTING_URL= `mypage/setting/`;
-const FOODS_URL= `food_list/`;
-// temporary 
-const ADMIN_DEL_EMP_URL = 'admin/delete/emp/';
-const ADMIN_ADD_FOOD_URL = 'admin/add/food/';
-
-const ADMIN_CODE = 100;
 </script>
 
 <style scoped>
