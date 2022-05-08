@@ -164,7 +164,6 @@ export default {
     //axios.put(submit/food/{emp_id})
       axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + sessionStorage.getItem('emp_id'), calorieObj)
       .then(() => {
-        // calorie displayed get Intakecalo called
         vm.fetchTotalCalorie();        
       })
 
