@@ -112,22 +112,6 @@ export default {
       login: function() {
         this.$router.push('/usertop')
       },
-
-      // err: function() {
-        
-      // },
-
-    //       getUserName() {
-    //   var vm = this
-    //   axios
-    //   .get(url + this.userId)
-    //   .then(function (response) {
-    //     vm.userName = response.data.name
-    //   }).catch(function () {
-    //     this.userName = "不正なユーザーID"
-    //   })
-    // },
-
   },
 };
 </script>
