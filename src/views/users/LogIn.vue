@@ -47,9 +47,6 @@
 
 export default {
   name: 'LogIn',
-  created:function(){
-    sessionStorage.set('emp_id', null)
-  },
   data: ()=> ({
     showPassword: false,
     user: {},
