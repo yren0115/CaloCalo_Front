@@ -20,7 +20,7 @@
               <!--  -->
               <v-label><h2 class="left-title-sub">本日の摂取カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
-                <h1 class="goal-cal-disp">{{ calorieToday}}kcal</h1>
+                <h1 class="goal-cal-disp">{{ intakeCalorieToday }}kcal</h1>
               </v-sheet>
               <div class="result"><h2></h2></div>
             </div>
@@ -50,12 +50,12 @@
 <!-- <script src="../calocalo.js"></script> -->
 
 <script>
-const DOMAINE = 'http://localhost:80/';
-const CONTEXT_PATH = "calocalo/";
+// const DOMAINE = 'http://localhost:80/';
+// const CONTEXT_PATH = "calocalo/";
 
-const BASE_URL = DOMAINE + CONTEXT_PATH;
+// const BASE_URL = DOMAINE + CONTEXT_PATH;
 // const EMP_GOAL_URL = `employee/info/`;
-const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
+// const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
 // const EMP_SUBMIT_RECORD_URL = 'submit/food/'
 import axios from "axios";
 
@@ -96,6 +96,9 @@ export default {
     },
     calorieAbailable: function() {
       return this.goalCalorie - this.calorieToday;
+    },
+    intakeCalorieToday: function() {
+      return this.calorieToday;
     }
   },
 
@@ -171,40 +174,33 @@ export default {
 
    }, 
 
-   submitCalorie(){
+   async submitCalorie(){
     var vm = this;
     var calorieObj = {calorie: null, date: new Date().toISOString().substring(0,10)}
     if (this.food.id === false) {
       return 
     }else{
-      calorieObj.calorie =  this.food.calorie;
-    axios.put('submit/food/{emp_id}')
+      calorieObj.calorie = this.food.calorie;
+      await axios.put(url, calorieObj)
       // axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + sessionStorage.getItem('emp_id'), calorieObj)
       .then(() => {
-        vm.fetchTotalCalorie();        
       })
+      await vm.fetchTotalCalorie();        
 
     }
 
    },
    fetchTotalCalorie(){
       var vm = this;
+      var totalCaloUrl;
     //axios.put(submit/food/{emp_id})
-      axios.get(BASE_URL + EMP_INTAKE_CALO_URL + sessionStorage.getItem('emp_id'))
+      // axios.get(BASE_URL + EMP_INTAKE_CALO_URL + sessionStorage.getItem('emp_id'))
+    var dateRecord = {"date": new Date().toISOString().substring(0,10)}
+    axios.get(totalCaloUrl, dateRecord)
       .then((res) => {
-        vm.user.total = res.data.total_calorie; // remporaly variable vm.user.total;
+        vm.calorieToday = res.data.total_calories; // remporaly variable vm.user.total;
       })
-
    },
-
-  // watch: {
-  //   // userId: function() {
-  //   //   this.getUserName()
-  //   // },
-  //   // info: function() {
-  //   //   this.getCoinInfo()
-  //   // }
-  // }
   }
 };
 
