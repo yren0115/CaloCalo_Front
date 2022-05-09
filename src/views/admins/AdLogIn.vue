@@ -6,21 +6,21 @@
       </router-link>
     </v-app-bar>
 
-    <v-main class="main-bg">
+    <v-main>
       <v-container fluid>
-        <v-row class="text-center main-bg-blur">
+        <v-row class="text-center">
             <v-col cols="12">
               <h1 class="main-title">CaloCalo</h1>
               <div class="main-contents">
                 <v-card width="400px" class="mx-auto mt-5">
                   <v-card-title>
-                    <h1 class="display-1">ログイン</h1>
+                    <h1 class="display-1">管理者ログイン</h1>
                   </v-card-title>
                   <v-card-text>
                     <v-form v-on:submit.prevent="submit">
-                      <v-text-field prepend-icon="mdi-account-circle" label="社員番号"  :value="empId"     v-model="user.empId" />
+                      <v-text-field prepend-icon="mdi-account-circle" label="管理者ID"  :value="empId"     v-model="admin.adminId" />
                       <h3>{{ empId }}</h3>
-                      <v-text-field v-bind:type="showPassword ? 'text' : 'password'"            prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' :            'mdi-eye-off'"  label="パスワード" @click:append="showPassword          =!showPassword"     v-model="user.password"/>
+                      <v-text-field v-bind:type="showPassword ? 'text' : 'password'"            prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' :            'mdi-eye-off'"  label="パスワード" @click:append="showPassword          =!showPassword"     v-model="admin.adminPass"/>
                       <v-card-actions>
                         <v-btn class="light-blue" type="submit">ログイン</v-btn>
                       </v-card-actions>
@@ -30,6 +30,7 @@
               </div>
             </v-col>
         </v-row>
+        <h3>{{ adminLoginPass }}{{ adminPass }}</h3>
       </v-container>
     </v-main>
 
@@ -44,7 +45,7 @@ export default {
   name: 'LogIn',
   data: ()=> ({
     showPassword: false,
-    user: {},
+    admin: {},
   }),
   computed: {
     getempId() {
@@ -53,14 +54,17 @@ export default {
     getpassword() {
       return this.$store.state.password;
     },
+    adminLoginPass() {
+      return this.$store.state.adminPass;
+    }
   },
   methods: {
       submit() {
-        this.$store.dispatch("auth", {
-          empId: this.user.empId,
-          password: this.user.password,
+        this.$store.dispatch("adauth", {
+          adminId: this.admin.adminId,
+          adminPass: this.admin.adminPass,
         });
-        this.$router.push('/usertop');
+        this.$router.push('/admin/userpage');
       },
 
       login: function() {

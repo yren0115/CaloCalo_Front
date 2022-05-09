@@ -1,17 +1,54 @@
 <template>
   <div id="app">
-    <TopComp />
-    <h2>{{ loginEmpId }}{{ loginPassword }}</h2>
+    <div v-if="loginEmpId === '0' && loginPassword === 'qazplm'">
+      <div v-if="this.$route.path === '/'">
+        <TopComp />
+      </div>
+      <div v-else-if="this.$route.path === '/signup'">
+        <SignUp />
+      </div>
+      <div v-else-if="this.$route.path === '/login'">
+        <LogIn />
+      </div>
+      <div v-else-if="this.$route.path ==='/admin/login'">
+        <AdLogIn />
+      </div>
+      <div v-else-if="this.$route.path === '/admin/userpage'">
+        <UserPage />
+      </div>
+    </div>
+<!-- <div v-else-if="adminLoginId ==='1' && adminLoginPass ==='abc'">
+</div> -->
+    <div v-else>
+      <MyPage />
+    </div>
+
+
   </div>
 </template>
 
 <script>
 import TopComp from '@/views/users/TopComp.vue'
+import MyPage from '@/views/users/MyPage.vue'
+import SignUp from '@/views/users/SignUp.vue'
+import LogIn from '@/views/users/LogIn.vue'
+import AdLogIn from '@/views/admins/AdLogIn.vue'
+import UserPage from '@/views/admins/UserPage.vue'
+
 
 export default ({
   name: 'App',
+  data: ()=> ({
+    adminId: -100,
+    adminPass: "admin",
+  }),
   components: {
-    TopComp
+    TopComp,
+    MyPage,
+    SignUp,
+    LogIn,
+    AdLogIn,
+    UserPage,
   },
   computed: {
     loginEmpId() {
@@ -20,6 +57,23 @@ export default ({
     loginPassword() {
       return this.$store.state.password;
     },
+    adminLoginId() {
+      return this.$store.state.adminId;
+    },
+    adminLoginPass() {
+      return this.$store.state.adminPass;
+    }
+  },
+  methods: {
+    getTopUrl() {
+     return location.pathname.match("/");
+    },
+    getSignupUrl() {
+      return location.pathname.match("/signup");
+    },
+    getLoginUrl() {
+      return location.pathname.match("/login");
+    }
   },
 })
 </script>
@@ -72,30 +126,3 @@ hr{
 }
 </style>
 
-<!-- 初期のApp.vue(template)のコード
-<div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div> -->
-
-<!-- 初期のApp.vue(style)のコード
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: red;
-    }
-  }
-} -->
