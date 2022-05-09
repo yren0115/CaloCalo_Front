@@ -49,7 +49,7 @@ const DOMAINE = 'http://localhost:80/';
 const CONTEXT_PATH = "calocalo/";
 
 const BASE_URL = DOMAINE + CONTEXT_PATH;
-const EMP_GOAL_URL = `employee/info/`;
+// const EMP_GOAL_URL = `employee/info/`;
 // const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
 const EMP_SUBMIT_RECORD_URL = 'submit/food/'
 import axios from "axios";
@@ -165,7 +165,7 @@ export default {
 
    fetchGoalCalories()  {
       var vm = this
-      // axios.get(BASE_URL +EMP_GOAL_URL+sessionStorage.getItem('emp_id'))
+      // axios.get(BASE_URL +EMP_GOAL_URL+ localStorage.emp_id)
       axios.get(url)
       .then(function (response) {
         vm.$store.dispatch("setGoalCalo", {
@@ -187,7 +187,7 @@ export default {
       return 
     }else{
       calorieObj.calorie =  this.food.calorie;
-      axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + sessionStorage.getItem('emp_id'), calorieObj)
+      axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
       .then(() => {
         // calorie displayed get Intakecalo called 
         

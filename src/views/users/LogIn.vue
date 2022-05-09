@@ -48,15 +48,17 @@
 </template>
 
 <script>
-import { functionsIn } from "lodash";
+
+var url = "http://localhost:50000/sites/";
+var ADMIN_CODE = 100;
 
 
-
+import axios from 'axios'
 
 export default {
   name: 'LogIn',
   created:function() {
-    sessionStorage.setItem('emp_id', null)
+    localStorage.emp_id = null;
   },
   data: ()=> ({
     showPassword: false,
@@ -91,17 +93,19 @@ export default {
       loginAuth(loginInfo, emp_id) {
         var vm = this;
         // axios.post(BASE_URL + LOGIN_URL + emp_id, loginInfo)
-        axios.post(url + emp_id, loginInfo)
+        axios.get(url + emp_id, loginInfo)
         .then( res => {
           if (res.data.login){
+            localStorage.emp_id = emp_id;
             if (res.data.admin === ADMIN_CODE){
             //  admin transition まだルート作ってない
             vm.$router.push('/admin');
            }else{
+             console.log('succeed login')
             vm.$router.push('/usertop');
            }
           }else{
-        //　ログイン失敗処理
+              //ログイン失敗処理
               vm.loginStatus = true;
               // empIdをどうやって空にするか
               vm.user.empId = null;
@@ -109,7 +113,7 @@ export default {
               return;
           }
           })
-          .catch((err) => {
+          .catch(() => {
           // set err
           // err = err
           })
