@@ -13,6 +13,8 @@
               <h1 class="main-title">CaloCalo</h1>
               <div class="main-contents">
                 <v-card width="400px" class="mx-auto mt-5">
+
+
                   <v-card-title>
                     <h1 class="display-1">ログイン</h1>
                   </v-card-title>
@@ -40,6 +42,9 @@
 </template>
 
 <script>
+
+
+
 export default {
   name: 'LogIn',
   data: ()=> ({
@@ -60,11 +65,8 @@ export default {
           empId: this.user.empId,
           password: this.user.password,
         });
+        sessionStorage.setItem('emp_id',1);
         this.$router.push('/usertop');
-      },
-
-      login: function() {
-        this.$router.push('/usertop')
       },
   },
 };
