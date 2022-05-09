@@ -42,11 +42,16 @@
 </template>
 
 <script>
+import { functionsIn } from "lodash";
+
 
 
 
 export default {
   name: 'LogIn',
+  created:function() {
+    sessionStorage.setItem('emp_id', null)
+  },
   data: ()=> ({
     showPassword: false,
     user: {},
