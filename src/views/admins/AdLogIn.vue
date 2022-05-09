@@ -19,7 +19,6 @@
                   <v-card-text>
                     <v-form v-on:submit.prevent="submit">
                       <v-text-field prepend-icon="mdi-account-circle" label="管理者ID"  :value="empId"     v-model="admin.adminId" />
-                      <h3>{{ empId }}</h3>
                       <v-text-field v-bind:type="showPassword ? 'text' : 'password'"            prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' :            'mdi-eye-off'"  label="パスワード" @click:append="showPassword          =!showPassword"     v-model="admin.adminPass"/>
                       <v-card-actions>
                         <v-btn class="light-blue" type="submit">ログイン</v-btn>
@@ -30,7 +29,6 @@
               </div>
             </v-col>
         </v-row>
-        <h3>{{ adminLoginPass }}{{ adminPass }}</h3>
       </v-container>
     </v-main>
 
