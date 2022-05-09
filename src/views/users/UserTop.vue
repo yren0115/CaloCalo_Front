@@ -12,8 +12,6 @@
                   <v-btn v-on:click="getCoinInfo">CLEAR</v-btn>
                 </div>
               </v-form>
-              <h3>取得コイン情報:{{ info }}</h3>
-
               <v-label><h2 class="left-title-sub">本日の摂取カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
                 <h1 class="goal-cal-disp">{{ getintakeCalorie }}kcal</h1>
