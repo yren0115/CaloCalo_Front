@@ -63,13 +63,16 @@ const url = 'http://localhost:3000/sites/'
 
 export default {
   name: 'UserTop',
+
   created:function() {
     var vm = this;
     // vm.fetchFoodList();
     vm.fetchGoalCalories(sessionStorage.getItem('emp_id'));
   },
+
   components: {
   },
+
   data: ()=> ({
     drawer: null,
     user: {},
@@ -83,6 +86,7 @@ export default {
     calorieToday:20,
 
   }),
+
    computed: {
     getintakeCalorie: function() {
       return this.$store.state.intakeCalorie;
@@ -94,6 +98,7 @@ export default {
       return this.goalCalorie - this.calorieToday;
     }
   },
+
   methods: {
     logout() {
       this.$store.dispatch("auth", {
@@ -102,14 +107,17 @@ export default {
       });
       this.$router.push('/login')
     },
+
     toUserLog() {
       this.$router.push('/userlog')
     },
+
     submit() {
       this.$store.dispatch("setcalo", {
         intakeCalorie: this.user.intakeCalorie,
       });
     },
+
     clear() {
       this.$refs.form.reset();
     },
@@ -170,12 +178,11 @@ export default {
       return 
     }else{
       calorieObj.calorie =  this.food.calorie;
-    axios.put('submit/food/{emp_id')
+    axios.put('submit/food/{emp_id}')
       // axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + sessionStorage.getItem('emp_id'), calorieObj)
       .then(() => {
         vm.fetchTotalCalorie();        
       })
-
 
     }
 
