@@ -20,7 +20,7 @@
               <!--  -->
               <v-label><h2 class="left-title-sub">本日の摂取カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
-                <h1 class="goal-cal-disp">{{ getintakeCalorie }}kcal</h1>
+                <h1 class="goal-cal-disp">{{ calorieToday}}kcal</h1>
               </v-sheet>
               <div class="result"><h2></h2></div>
             </div>
@@ -30,13 +30,14 @@
               <v-label><h2 class="right-title">現在の目標カロリー</h2></v-label>
               <div class="goal-cal">
                 <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
-                  <h1 class="goal-cal-disp">{{ getgoalCalorie }}kcal</h1>
+                  <!-- <h1 class="goal-cal-disp">{{ getgoalCalorie }}kcal</h1> -->
+                  <h1 class="goal-cal-disp">{{ goalCalorie }}kcal</h1>
                 </v-sheet>
               </div>
               <div class="poss-cal">
                 <v-label><h2 class="right-title-sub">摂取可能なカロリー</h2></v-label>
                 <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
-                  <h1 class="goal-cal-disp">{{ $store.getters.calcCal }}kcal</h1>
+                  <h1 class="goal-cal-disp">{{ calorieAbailable }}kcal</h1>
                 </v-sheet>
               </div>
             </div>
@@ -54,8 +55,8 @@ const CONTEXT_PATH = "calocalo/";
 
 const BASE_URL = DOMAINE + CONTEXT_PATH;
 // const EMP_GOAL_URL = `employee/info/`;
-// const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
-const EMP_SUBMIT_RECORD_URL = 'submit/food/'
+const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
+// const EMP_SUBMIT_RECORD_URL = 'submit/food/'
 import axios from "axios";
 
 const url = 'http://localhost:3000/sites/'
@@ -78,6 +79,8 @@ export default {
     selectedFoodId:null,
     foodName:null,
     food:{name:null, id:null, calorie:null},
+    goalCalorie:0,
+    calorieToday:20,
 
   }),
    computed: {
@@ -85,14 +88,17 @@ export default {
       return this.$store.state.intakeCalorie;
     },
     getgoalCalorie: function() {
-      return this.$store.state.goalCalorie;
+      return this.$store.state.goalCalorie.goal_calorie;
+    },
+    calorieAbailable: function() {
+      return this.goalCalorie - this.calorieToday;
     }
   },
   methods: {
     logout() {
       this.$store.dispatch("auth", {
         empId: '0',
-        password: 'qazplm',
+        password: 'qazplm'
       });
       this.$router.push('/login')
     },
@@ -137,12 +143,15 @@ export default {
    fetchGoalCalories(emp_id)  {
       var vm = this
       // axios.get(BASE_URL +EMP_GOAL_URL+sessionStorage.getItem('emp_id'))
-      axios.get(url + emp_id)
+      axios.get(url )
       .then(function (response) {
+        emp_id;
         // not change reactively 
+        var calorieObj = response.data;// {goal_calorie:100}
         vm.$store.dispatch("setGoalCalo", {
-        goalCalorie: response.data.goal_calorie
+        goalCalorie: calorieObj
         })
+        vm.goalCalorie = response.data.goal_calorie;
         console.log(response.data.goal_calorie); // tadasii
       }).catch(function () {
 
@@ -161,8 +170,8 @@ export default {
       return 
     }else{
       calorieObj.calorie =  this.food.calorie;
-    //axios.put(submit/food/{emp_id})
-      axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + sessionStorage.getItem('emp_id'), calorieObj)
+    axios.put('submit/food/{emp_id')
+      // axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + sessionStorage.getItem('emp_id'), calorieObj)
       .then(() => {
         vm.fetchTotalCalorie();        
       })
