@@ -17,12 +17,9 @@
                 </v-textarea>
 
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="postGoalCalorie(); clear()">SUBMIT</v-btn>
+                  <v-btn class="mr-4" v-on:click="postGoalCalorie(PUT_URL); clear()">SUBMIT</v-btn>
                 </div>
               </v-form>
-               <h3>入力された目標カロリー:{{ user.goalCalorie }}</h3>
-               <h3>非同期で取得したデータ:{{ title }}</h3>
-               <h3>{{ goalCalorie }}</h3>
             </div>
           </v-col>
       </v-row>
@@ -89,7 +86,7 @@ export default ({
     },
 
     postGoalCalorie() {
-      // var rempId = this.getempId
+      // var rempId = this.getempId 
       axios
       .put((URL), {
         id: this.getempId,
