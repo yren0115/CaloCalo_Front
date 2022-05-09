@@ -1,7 +1,7 @@
 <template>
   <v-container>
       <v-row lg="12" justify="center">
-        <v-col cols="6" class="left-col">
+        <v-col cols="7" class="left-col">
           <div class="form-container">
             <v-form ref="form">
             <v-label><h1 class="left-title">削除するユーザーのIDを入力してください</h1></v-label>
@@ -129,6 +129,7 @@ export default {
 }
 .btn-container {
   margin: 0 auto;
+  text-align: center;
 }
 .output-container {
   height: 90vh;

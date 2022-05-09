@@ -5,11 +5,11 @@
           <div class="form-container">
             <v-form ref="form">
             <v-label><h1 class="left-title">食品登録ページ</h1></v-label>
-              <v-label><h2>食品名</h2></v-label>
-              <v-text-field label="Outlined" placeholder="食品名を入力してください" outlined dense>
+              <v-label><h2 class="left-title-sub">食品名</h2></v-label>
+              <v-text-field label="食品名" placeholder="食品名を入力してください" outlined dense>
               </v-text-field>
-              <v-label><h2>食品カロリー</h2></v-label>
-              <v-text-field label="Outlined" placeholder="食品カロリーを入力してください" outlined dense v-model.number="fooCalorie">
+              <v-label><h2 class="left-title-sub">食品カロリー</h2></v-label>
+              <v-text-field label="食品カロリー" placeholder="食品カロリーを入力してください" outlined dense v-model.number="fooCalorie">
               </v-text-field>
                 <div class="btn-container">
                   <v-btn class="mr-4" v-on:click="submit">SUBMIT</v-btn>
@@ -123,8 +123,7 @@ export default {
 }
 .left-title-sub {
   color: black;
-  text-align: center;
-  padding: 50px 0;
+  
 }
 .form-container {
   height: 90vh;
@@ -132,6 +131,7 @@ export default {
 }
 .btn-container {
   margin: 0 auto;
+  text-align: center;
 }
 .output-container {
   height: 90vh;
