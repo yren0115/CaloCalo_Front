@@ -12,12 +12,17 @@
             <div class="lower-container">
               <v-label><h2 class="lower-title">目標カロリーを入力してください</h2></v-label>
               <v-form ref="form">
-                <v-textarea solo height="200px" name="input-7-4" label="目標カロリーを入力" v-model="user.goalCalorie">
+
+                <v-textarea :rules="inputRules" solo height="200px" name="input-7-4" label="目標カロリーを入力" @input="validate" v-model.number="user.goalCalorie">
                 </v-textarea>
+
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="submitGoalCalo(); clear()">SUBMIT</v-btn>
+                  <v-btn class="mr-4" v-on:click="postGoalCalorie(); clear()">SUBMIT</v-btn>
                 </div>
               </v-form>
+               <h3>入力された目標カロリー:{{ user.goalCalorie }}</h3>
+               <h3>非同期で取得したデータ:{{ title }}</h3>
+               <h3>{{ goalCalorie }}</h3>
             </div>
           </v-col>
       </v-row>
@@ -25,6 +30,18 @@
 </template>
 
 <script>
+// const SETTING_URL = '/mypage/setting/';
+// const DOMAINE = 'http://localhost:80/';
+// const CONTEXT_PATH = "calocalo/";
+
+import axios from "axios";
+
+// const BASE_URL = DOMAINE + CONTEXT_PATH;
+// BASE_URL + SETTING_URL + {emp_id}
+
+const URL = "http://localhost:3000/goalcalories/1";
+// const EMPID = this.getempId;
+// const PUT_URL = URL + EMPID;
 
 export default ({
   name: 'UserSet',
@@ -33,13 +50,23 @@ export default ({
   data: ()=> ({
     drawer: null,
     user: {},
+    numValue: 0,
     menuflag: 0,
+    goalCalorie: 0,
+    title: "",
+    inputRules: [
+      v => !!v || '0以上の数値で入力してください',
+      v => v.length <= 4 || '9999までの数値で入力してください',
+    ],
   }),
    computed: {
+     getempId: function() {
+       return this.$store.state.empId;
+     },
     getintakeCalorie: function() {
       return this.$store.state.intakeCalorie;
     },
-    getoalCalorie: function() {
+    getgoalCalorie: function() {
       return this.$store.state.goalCalorie;
     },
   },
@@ -54,10 +81,27 @@ export default ({
         goalCalorie: this.user.goalCalorie,
       });
     },
+    validate() {
+      this.numValue = this.numValue.replace(/\D/g, '')
+    }, 
     clear() {
       this.$refs.form.reset();
     },
+
+    postGoalCalorie() {
+      // var rempId = this.getempId
+      axios
+      .put((URL), {
+        id: this.getempId,
+        goalcalorie: this.user.goalCalorie
+      })
+    },
   },
+  watch: {
+      getgoalCalorie: function() {
+      this.goalCalorie()
+    },
+  }
 });
 </script>
 
@@ -84,9 +128,6 @@ export default ({
   text-align: center;
   padding: 50px 0;
 }
-
-
-
 .set-title {
   margin-top: 100px;
 }
