@@ -14,7 +14,7 @@
               <div class="main-contents">
                 <v-card width="400px" class="mx-auto mt-5">
 
-                  <p v-show="loginFailed">社員番号かIDが間違っています。</p>
+                  <p v-show="loginFailed" style="color:red">社員番号かIDが間違っています。</p>
 
                   <v-card-title>
                     <h1 class="display-1">ログイン</h1>
@@ -84,7 +84,7 @@ export default {
           empId: this.user.empId,
           password: this.user.password,
         });
-        sessionStorage.setItem('emp_id', this.user.empId);
+        localStorage.emp_id = this.user.empId;
         var loginInfo = {
           password:vm.user.password
         }
@@ -108,8 +108,8 @@ export default {
               //ログイン失敗処理
               vm.loginStatus = true;
               // empIdをどうやって空にするか
-              vm.user.empId = null;
-              vm.user.password = '';
+              vm.user.empId = 0;
+              vm.user.password = 'qazplm';
               return;
           }
           })
