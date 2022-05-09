@@ -39,9 +39,9 @@ import axios from "axios";
 // const BASE_URL = DOMAINE + CONTEXT_PATH;
 // BASE_URL + SETTING_URL + {emp_id}
 
-const URL = "http://localhost:3000/goalcalories/1";
-// const EMPID = this.getempId;
-// const PUT_URL = URL + EMPID;
+const URL = "http://localhost:3000/goalcalories/";
+const EMPID = this.getempId;
+const PUT_URL = URL + EMPID;
 
 export default ({
   name: 'UserSet',
@@ -91,7 +91,7 @@ export default ({
     postGoalCalorie() {
       // var rempId = this.getempId
       axios
-      .put((URL), {
+      .put(PUT_URL, {
         id: this.getempId,
         goalcalorie: this.user.goalCalorie
       })
