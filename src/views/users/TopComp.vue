@@ -30,11 +30,18 @@
                   </h3>
                 </div>
               </div>
+              <div class="admin-login-content">
+                  <h3>管理者の方はこちら<br />
+                    <router-link to="/admin/login">
+                      <v-btn  class="yellow"><v-icon>mdi-login-variant</v-icon>管理者ログイン</v-btn>
+                    </router-link>
+                  </h3>
+                </div>
             </v-col>
           </v-row>
         </v-container>
       </v-main>
-      
+
       <v-footer app class="blue darken-4" dark>
         <p class="reset-css footer-layout">Copyright © 2022 SBチームA. All Rights</p>
       </v-footer>

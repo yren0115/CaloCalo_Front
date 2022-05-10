@@ -6,8 +6,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    empId: '0',
+    empId: '1',
     password:'qazplm',
+    adminId: '1',
+    adminPass: 'abc',
     goalCalorie: 0,
     intakeCalorie: 0,
     selectFood: null,
@@ -17,6 +19,10 @@ export default new Vuex.Store({
       state.empId = user.empId;
       state.password = user.password;
       state.goalCalorie = user.goalCalorie
+    },
+    updateAdmin(state, admin) {
+      state.adminId = admin.adminId
+      state.adminPass = admin.adminPass
     },
     destroyUser(state, user) {
       state.empId = user.empId
@@ -35,6 +41,9 @@ export default new Vuex.Store({
     },
     outh(context, user) {
       context.commit('destroyUser', user);
+    },
+    adauth(context, admin) {
+      context.commit('updateAdmin', admin)
     },
     setcalo(context, user) {
       context.commit('setCalorie', user);

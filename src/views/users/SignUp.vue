@@ -18,14 +18,11 @@
                   </v-card-title>
                   <v-card-text>
                     <v-form>
-                      <v-text-field prepend-icon="mdi-account-circle" label="社員番号"     v-model="user.empId" />
-                      <v-text-field v-bind:type="showPassword ? 'text' :'password'"              prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' :'mdi-eye-off'"  label="パスワード" v-on:click:append="showPassword   =  !showPassword"      v-model="user.password"/>
-
-                      <v-text-field prepend-icon="mdi-flag-checkered" label="目標カロリーを入力" outlined v-model="user.goalCalorie"></v-text-field>
-
-                      <!-- <v-select prepend-icon="mdi-flag-checkered" v-model="select" :items="items"       label="    目標カロリー" data-vv-name="select" required></v-select> -->
+                      <v-text-field prepend-icon="mdi-account-circle" label="社員番号"     v-model="empId" />
+                      <v-text-field v-bind:type="showPassword ? 'text' :'password'"              prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye'    :         'mdi-eye-off'"  label="パスワード" @click:append="showPassword   =  !showPassword"      v-model="password"/>
+                      <v-select prepend-icon="mdi-flag-checkered" v-model="select" :items="items"       label="    目標カロリー" data-vv-name="select" required></v-select>
                       <v-card-actions>
-                        <v-btn color="light-green" v-on:click="submit">新規登録</v-btn>
+                        <v-btn color="light-green" @click="signup">新規登録</v-btn>
                       </v-card-actions>
                     </v-form>
                   </v-card-text>
@@ -49,22 +46,22 @@ export default {
     showPassword: false,
       empId:'',
       password:'',
-      goalCalorie: 0,
-      user: {},
       select: null,
+      items: [
+        '200kcal',
+        '400kcal',
+        '600kcal',
+        '800kcal',
+        '1000kcal',
+      ],
   }),
-  computed: {
-
-  },
   methods: {
       submit() {
-        this.$store.dispatch("auth", {
-          empId: this.user.empId,
-          password: this.user.password,
-          goalCalorie: this.user.goalCalorie,
-        });
-        this.$router.push('/usertop')
+        console.log(this.name,this.password)
       },
+      signup: function() {
+        this.$router.push('/mypage')
+      }
   },
 };
 </script>
