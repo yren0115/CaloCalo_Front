@@ -6,10 +6,10 @@
             <v-form ref="form">
             <v-label><h1 class="left-title">削除するユーザーのIDを入力してください</h1></v-label>
 
-              <v-text-field label="ユーザーID" placeholder="ユーザーIDを入力してください" outlined dense v-model.number="user.empId">
+              <v-text-field label="ユーザーID" placeholder="ユーザーIDを入力してください" outlined dense v-model.number="empId">
               </v-text-field>
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="deleteEmp(this.getempId)">DELETE</v-btn>
+                  <v-btn class="mr-4" v-on:click="deleteEmp(); clear()">DELETE</v-btn>
                 </div>
               </v-form>
           </div>
@@ -21,7 +21,8 @@
 <script>
 import axios from "axios";
 
-// const URL = "http://localhost:3000/goalcalories/";
+const URL = `http://localhost:3000/goalcalories/`;
+const param = {key: [1,2,3]}
 
 export default {
   name: 'UserTop',
@@ -31,6 +32,7 @@ export default {
     drawer: null,
     user: {},
     menuflag: 0,
+    empId: '',
     userId: '',
     userName: '',
   }),
@@ -62,9 +64,8 @@ export default {
       this.$refs.form.reset();
     },
     deleteEmp() {
-      // var emp = this.getempId
       axios
-      .delete("http://localhost:3000/goalcalories/1")
+      .delete(URL+this.empId, {data: param})
     },
   },
   watch: {

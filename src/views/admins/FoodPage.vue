@@ -6,13 +6,13 @@
             <v-form ref="form">
             <v-label><h1 class="left-title">食品登録ページ</h1></v-label>
               <v-label><h2 class="left-title-sub">食品名</h2></v-label>
-              <v-text-field label="食品名" placeholder="食品名を入力してください" outlined dense>
+              <v-text-field label="食品名" placeholder="食品名を入力してください" outlined dense v-model="foodName">
               </v-text-field>
               <v-label><h2 class="left-title-sub">食品カロリー</h2></v-label>
-              <v-text-field label="食品カロリー" placeholder="食品カロリーを入力してください" outlined dense v-model.number="fooCalorie">
+              <v-text-field label="食品カロリー" placeholder="食品カロリーを入力してください" outlined dense v-model.number="foodCalo">
               </v-text-field>
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="submit">SUBMIT</v-btn>
+                  <v-btn class="mr-4" v-on:click="postFood(); clear()">SUBMIT</v-btn>
                 </div>
             </v-form>
           </div>
@@ -24,7 +24,7 @@
 <script>
 import axios from "axios";
 
-const url = 'https://jsonplaceholder.typicode.com/users/'
+const URL = "http://localhost:3000/goalcalories/"
 
 export default {
   name: 'UserTop',
@@ -34,8 +34,8 @@ export default {
     drawer: null,
     user: {},
     menuflag: 0,
-    userId: '',
-    userName: '',
+    foodName: '',
+    FoodCalo: 0,
   }),
    computed: {
     getintakeCalorie: function() {
@@ -64,23 +64,18 @@ export default {
     clear() {
       this.$refs.form.reset();
     },
-    getUserName() {
-      var vm = this
+    postFood() {
       axios
-      .get(url + this.userId)
-      .then(function (response) {
-        vm.userName = response.data.name
-      }).catch(function () {
-        this.userName = "不正なユーザーID"
+      .post(URL, {
+        foodName: this.foodName,
+        foodCalo: this.foodCalo,
       })
-    },
-    getCoinInfo() {
-      axios
-        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-        .then( response => this.info = response.data)
-        .catch(function () {
-          this.info = "不正なコイン情報です"
-        })
+      .then(function (response) {
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
     },
   },
   watch: {
