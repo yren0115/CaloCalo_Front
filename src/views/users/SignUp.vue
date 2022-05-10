@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'SignUp',
   data: ()=> ({
@@ -47,6 +49,8 @@ export default {
       empId:'',
       password:'',
       select: null,
+      existence: false,
+      existenceErr:false,
       items: [
         '200kcal',
         '400kcal',
@@ -61,7 +65,24 @@ export default {
       },
       signup: function() {
         this.$router.push('/mypage')
-      }
+      },
+      createEmp: async function() {
+        var vm = this;
+        await axios.get()
+        .then(function(res){
+          vm.existence = res.data.existence;
+        })
+        if (vm.existence){
+        await axios.post()
+        .then(function(){
+
+        }
+        )}else{
+          vm.existenceErr = true;
+          return ;
+        }
+        
+      },
   },
 };
 </script>
