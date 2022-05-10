@@ -55,16 +55,6 @@ export default ({
     },
   },
   methods: {
-    logout() {
-      this.$store.dispatch("auth", {
-        empId: '0',
-        password: 'qazplm',
-      });
-      this.$router.push('/login')
-    },
-    toUserLog() {
-      this.$router.push('/userlog')
-    },
     submit() {
       this.$store.dispatch("setcalo", {
         intakeCalorie: this.user.intakeCalorie,
