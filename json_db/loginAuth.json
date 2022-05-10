@@ -1,0 +1,14 @@
+{
+  "sites": [
+    {
+      "id": 1,
+      "login": true,
+      "admin": 1
+    },
+    {
+      "id": 2,
+      "login": false,
+      "admin": 100
+    }
+  ]
+}
