@@ -5,7 +5,7 @@
           <v-col cols="6" class="left-col">
             <div class="upper-container">
               <v-sheet elevation="50" class="mx-auto" height="50" width="500" rounded shaped>
-                <p class="date-disp"><v-icon>mdi-step-backward</v-icon>  過去ログ参照(Date): <input type="date" v-model="logDate">
+                <p class="date-disp"><v-icon>mdi-step-backward</v-icon>  過去ログ参照(Date): <input type="date" v-bind:value="logDate" v-on:change="logDate = $event.target.value; requestLog();">
                 <v-icon>mdi-step-forward</v-icon></p>
               </v-sheet>
               <v-label><h2 class="upper-left-title">目標摂取カロリー</h2></v-label>
@@ -16,7 +16,7 @@
           </v-col>
           <v-col cols="6" class="right-col">
             <div class="upper-container">
-              <v-label><h2 class="left-title">mm/ddに摂取したカロリー</h2></v-label>
+              <v-label><h2 class="left-title">摂取したカロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
                 <h1 class="goal-cal-disp">{{ getgoalCalorie }}kcal</h1>
               </v-sheet>
@@ -26,9 +26,10 @@
       <v-row lg="12">
         <v-col cols="12">
             <div class="lower-container">
-              <v-label><h2 class="lower-title">mm/ddの過不足カロリー</h2></v-label>
+              <v-label><h2 class="lower-title">過不足カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="200" width="1330" rounded shaped>
-                <h1 class="goal-cal-disp">{{ calculateCalorie }}kcal</h1>
+                <h1 v-if="recordExistence" class="goal-cal-disp">{{ calculateCalorie + 'kcal'}}</h1>
+                <h1 v-else class="goal-cal-disp">{{ calculateCalorie }}</h1>
               </v-sheet>
             </div>
         </v-col>
@@ -43,13 +44,17 @@ export default ({
   name: 'UserLog',
   components: {
   },
+  created:function() {
+    // 今日の記録のfetch
+  },
   data: ()=> ({
     drawer: null,
     user: {},
     menuflag: 0,
-    totalCalorie:0,
-    goalCalorie:0,
-    logDate:null,
+    totalCalorie:100,
+    goalCalorie:1000,
+    logDate:new Date().toISOString().substring(0,10),
+    recordExistence:false
 
   }),
    computed: {
@@ -60,27 +65,32 @@ export default ({
       return this.goalCalorie;
     },
     calculateCalorie: function() {
+      if (this.totalCalorie == null){
+        return 'No Record'
+      }
       return this.goalCalorie - this.totalCalorie;
+    },
+    recordDisplay:function() {
+      return this.recordExistence;
     }
   },
   methods: {
-       fetchTotalCalorie(){
-     // #######
+    requestLog(){
+      console.log("requestLog " + this.logDate);
 
-     // emp_id at the end of the url 
-     var vm = this;
-     var url = 'http://localhost:50001/sites/';
-      axios.get(url)
-      .then((res) => {
-        var existence = res.data.existence;
-        if (existence){
-         = res.data.total_calories; // remporaly variable vm.user.total;
-        } else {
-          vm.goalCalorie = '-----'
-          vm.totalCalorie = '-----'
-          return ;
-        }
-      })
+    },
+    fetchTotalCalorie(){
+    var vm = this;
+    var url = 'http://localhost:50001/sites/';// emp_id at the end of the url 
+    axios.get(url) // dateObj {"date":logDate}第2引数
+    .then((res) => {
+    if (res.data.existence){
+    vm.totalCalorie = res.data.total_calories; // remporaly variable vm.user.total;
+    } else {
+    vm.totalCalorie = null;
+    return ;
+    }
+    })
 
      /* honban 
       var vm = this;
@@ -105,7 +115,7 @@ export default ({
       axios.get(url)
       .then(function (response) {
         emp_id;
-        // not change reactively 
+    // not change reactively 
         // var calorieObj = response.data;// {goal_calorie:100}
         // vm.$store.dispatch("setGoalCalo", {
         // goalCalorie: calorieObj
