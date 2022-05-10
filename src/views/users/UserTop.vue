@@ -16,8 +16,6 @@
                   <v-btn class="mr-4" v-on:click="submitCalorie" >submit</v-btn>
                 </div>
               </v-form>
-              <!--  -->
-              <!--  -->
               <v-label><h2 class="left-title-sub">本日の摂取カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
                 <h1 class="goal-cal-disp">{{ calorieToday}}kcal</h1>
@@ -55,8 +53,11 @@ const CONTEXT_PATH = "calocalo/";
 
 const BASE_URL = DOMAINE + CONTEXT_PATH;
 // const EMP_GOAL_URL = `employee/info/`;
+// const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
+const EMP_SUBMIT_RECORD_URL = 'submit/food/'
 const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
 // const EMP_SUBMIT_RECORD_URL = 'submit/food/'
+
 import axios from "axios";
 
 const url = 'http://localhost:3000/sites/'
@@ -142,6 +143,8 @@ export default {
 
    fetchGoalCalories(emp_id)  {
       var vm = this
+      // axios.get(BASE_URL +EMP_GOAL_URL+ localStorage.emp_id)
+      axios.get(url)
       // axios.get(BASE_URL +EMP_GOAL_URL+sessionStorage.getItem('emp_id'))
       axios.get(url )
       .then(function (response) {
@@ -170,6 +173,7 @@ export default {
       return 
     }else{
       calorieObj.calorie =  this.food.calorie;
+      axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
     axios.put('submit/food/{emp_id')
       // axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + sessionStorage.getItem('emp_id'), calorieObj)
       .then(() => {
