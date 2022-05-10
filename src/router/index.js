@@ -7,6 +7,8 @@ import UserLog from '../views/users/UserLog.vue'
 import UserTop from '../views/users/UserTop.vue'
 import UserSet from '../views/users/UserSet.vue'
 import AdLogIn from '../views/admins/AdLogIn.vue'
+import UserPage from '../views/admins/UserPage.vue'
+import FoodPage from '../views/admins/FoodPage.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +47,16 @@ const routes = [
     path: '/admin/login',
     name: 'adminLogin',
     component: AdLogIn
+  },
+  {
+    path: '/admin/userpage',
+    name: 'adminUserPage',
+    component: UserPage,
+  },
+  {
+    path: '/admin/foodpage',
+    name: 'adminFoodPage',
+    component: FoodPage
   }
 ]
 

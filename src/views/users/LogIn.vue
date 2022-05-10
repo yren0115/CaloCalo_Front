@@ -21,14 +21,9 @@
                   </v-card-title>
                   <v-card-text>
                     <v-form v-on:submit.prevent="submit">
-                    <!-- emp no ########################  -->
-                      <v-text-field prepend-icon="mdi-account-circle" label="社員番号" :value="empId"  v-model="user.empId" />
+                      <v-text-field prepend-icon="mdi-account-circle" label="社員番号"  :value="empId"     v-model="user.empId" />
                       <h3>{{ empId }}</h3>
-
-                      <v-text-field v-bind:type="showPassword ? 'text' : 'password'" 
-                      prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' :'mdi-eye-off'"  
-                      label="パスワード" @click:append="showPassword=!showPassword" v-model="user.password"/>
-
+                      <v-text-field v-bind:type="showPassword ? 'text' : 'password'"            prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' :            'mdi-eye-off'"  label="パスワード" @click:append="showPassword          =!showPassword"     v-model="user.password"/>
                       <v-card-actions>
                         <v-btn class="light-blue" type="submit">ログイン</v-btn>
                       </v-card-actions>
@@ -63,7 +58,6 @@ export default {
   data: ()=> ({
     showPassword: false,
     user: {},
-    loginStatus:false,
   }),
   computed: {
     getempId() {
@@ -72,14 +66,9 @@ export default {
     getpassword() {
       return this.$store.state.password;
     },
-    loginFailed() {
-      return this.loginStatus;
-    },
   },
   methods: {
       submit() {
-        // fix here 
-        var vm = this;
         this.$store.dispatch("auth", {
           empId: this.user.empId,
           password: this.user.password,

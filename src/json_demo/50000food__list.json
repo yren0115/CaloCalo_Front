@@ -1,0 +1,46 @@
+{
+    "sites": {
+        "food_list":[
+        {
+            "id": 1,
+            "name": "snackH",
+            "calorie": 205
+        },
+        {
+            "id": 2,
+            "name": "snackG",
+            "calorie": 204
+        },
+        {
+            "id": 3,
+            "name": "snackF",
+            "calorie": 202
+        },
+        {
+            "id": 4,
+            "name": "snackE",
+            "calorie": 211
+        },
+        {
+            "id": 5,
+            "name": "snackD",
+            "calorie": 213
+        },
+        {
+            "id": 6,
+            "name": "snackC",
+            "calorie": 223
+        },
+        {
+            "id": 7,
+            "name": "snackB",
+            "calorie": 255
+        },
+        {
+            "id": 8,
+            "name": "snackA",
+            "calorie": 230
+        }
+    ]
+}
+}

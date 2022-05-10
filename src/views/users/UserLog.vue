@@ -5,7 +5,8 @@
           <v-col cols="6" class="left-col">
             <div class="upper-container">
               <v-sheet elevation="50" class="mx-auto" height="50" width="500" rounded shaped>
-                <p class="date-disp"><v-icon>mdi-step-backward</v-icon>  過去ログ参照(Date): <input type="date"><v-icon>mdi-step-forward</v-icon></p>
+                <p class="date-disp"><v-icon>mdi-step-backward</v-icon>  過去ログ参照(Date): <input type="date" v-model="logDate">
+                <v-icon>mdi-step-forward</v-icon></p>
               </v-sheet>
               <v-label><h2 class="upper-left-title">目標摂取カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
@@ -27,7 +28,7 @@
             <div class="lower-container">
               <v-label><h2 class="lower-title">mm/ddの過不足カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="200" width="1330" rounded shaped>
-                <h1 class="goal-cal-disp">{{ getgoalCalorie }}kcal</h1>
+                <h1 class="goal-cal-disp">{{ calculateCalorie }}kcal</h1>
               </v-sheet>
             </div>
         </v-col>
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default ({
   name: 'UserLog',
@@ -45,35 +47,76 @@ export default ({
     drawer: null,
     user: {},
     menuflag: 0,
+    totalCalorie:0,
+    goalCalorie:0,
+    logDate:null,
+
   }),
    computed: {
     getintakeCalorie: function() {
-      return this.$store.state.intakeCalorie;
+      return this.totalCalorie;
     },
     getgoalCalorie: function() {
-      return this.$store.state.goalCalorie;
+      return this.goalCalorie;
     },
+    calculateCalorie: function() {
+      return this.goalCalorie - this.totalCalorie;
+    }
   },
   methods: {
-    logout() {
-      this.$store.dispatch("auth", {
-        empId: '0',
-        password: 'qazplm',
-      });
-      this.$router.push('/login')
+       fetchTotalCalorie(){
+     // #######
+
+     // emp_id at the end of the url 
+     var vm = this;
+     var url = 'http://localhost:50001/sites/';
+      axios.get(url)
+      .then((res) => {
+        var existence = res.data.existence;
+        if (existence){
+         = res.data.total_calories; // remporaly variable vm.user.total;
+        } else {
+          vm.goalCalorie = '-----'
+          vm.totalCalorie = '-----'
+          return ;
+        }
+      })
+
+     /* honban 
+      var vm = this;
+      var totalCaloUrl;
+      */
+
+      // axios.get(BASE_URL + EMP_INTAKE_CALO_URL + sessionStorage.getItem('emp_id'))
+
+      /* ############## honban #############
+    var dateRecord = {"date": new Date().toISOString().substring(0,10)}
+    axios.get(totalCaloUrl, dateRecord)
+      .then((res) => {
+        vm.calorieToday = res.data.total_calories; // remporaly variable vm.user.total;
+      })
+      ############## honban ############# */
+      },
+      
+      fetchGoalCalories(emp_id)  {
+      const url = 'http://localhost:3000/sites/'
+      var vm = this
+      // axios.get(BASE_URL +EMP_GOAL_URL+sessionStorage.getItem('emp_id'))
+      axios.get(url)
+      .then(function (response) {
+        emp_id;
+        // not change reactively 
+        // var calorieObj = response.data;// {goal_calorie:100}
+        // vm.$store.dispatch("setGoalCalo", {
+        // goalCalorie: calorieObj
+        // })
+        vm.goalCalorie = response.data.goal_calorie;
+        console.log(response.data.goal_calorie); // tadasii
+      }).catch(function () {
+
+      })
+   }, 
     },
-    toUserLog() {
-      this.$router.push('/userlog')
-    },
-    submit() {
-      this.$store.dispatch("setcalo", {
-        intakeCalorie: this.user.intakeCalorie,
-      });
-    },
-    clear() {
-      this.$refs.form.reset();
-    },
-  },
 });
 </script>
 
