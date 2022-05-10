@@ -6,10 +6,10 @@
             <v-form ref="form">
             <v-label><h1 class="left-title">削除するユーザーのIDを入力してください</h1></v-label>
 
-              <v-text-field label="Outlined" placeholder="ユーザーIDを入力してください" outlined dense>
+              <v-text-field label="ユーザーID" placeholder="ユーザーIDを入力してください" outlined dense v-model.number="user.empId">
               </v-text-field>
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="submit">DELETE</v-btn>
+                  <v-btn class="mr-4" v-on:click="deleteEmp(this.getempId)">DELETE</v-btn>
                 </div>
               </v-form>
           </div>
@@ -21,7 +21,7 @@
 <script>
 import axios from "axios";
 
-const url = 'https://jsonplaceholder.typicode.com/users/'
+// const URL = "http://localhost:3000/goalcalories/";
 
 export default {
   name: 'UserTop',
@@ -35,6 +35,9 @@ export default {
     userName: '',
   }),
    computed: {
+     getempId: function() {
+       return this.$store.state.empId;
+     },
     getintakeCalorie: function() {
       return this.$store.state.intakeCalorie;
     },
@@ -50,9 +53,6 @@ export default {
       });
       this.$router.push('/login')
     },
-    toUserLog() {
-      this.$router.push('/userlog')
-    },
     submit() {
       this.$store.dispatch("setcalo", {
         intakeCalorie: this.user.intakeCalorie,
@@ -61,23 +61,10 @@ export default {
     clear() {
       this.$refs.form.reset();
     },
-    getUserName() {
-      var vm = this
+    deleteEmp() {
+      // var emp = this.getempId
       axios
-      .get(url + this.userId)
-      .then(function (response) {
-        vm.userName = response.data.name
-      }).catch(function () {
-        this.userName = "不正なユーザーID"
-      })
-    },
-    getCoinInfo() {
-      axios
-        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-        .then( response => this.info = response.data)
-        .catch(function () {
-          this.info = "不正なコイン情報です"
-        })
+      .delete("http://localhost:3000/goalcalories/1")
     },
   },
   watch: {
