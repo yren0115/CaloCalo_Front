@@ -24,7 +24,7 @@
 <script>
 import axios from "axios";
 
-const URL = "http://localhost:3000/goalcalories/"
+const URL = "http://localhost:3000/foodlists/"
 
 export default {
   name: 'UserTop',
