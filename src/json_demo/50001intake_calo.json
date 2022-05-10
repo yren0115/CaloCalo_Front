@@ -1,0 +1,9 @@
+{
+    "sites":
+        {
+        "id":1,
+        "date":"2022-05-10",
+        "total_calories":200,
+        "existence":true
+        }
+}
