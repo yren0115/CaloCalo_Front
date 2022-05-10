@@ -40,6 +40,9 @@
 <script>
 import axios from 'axios';
 
+function test(day){
+      console.log("requestLog " + day);
+}
 export default ({
   name: 'UserLog',
   components: {
@@ -76,7 +79,7 @@ export default ({
   },
   methods: {
     requestLog(){
-      console.log("requestLog " + this.logDate);
+      test(this.logDate);
 
     },
     fetchTotalCalorie(){
