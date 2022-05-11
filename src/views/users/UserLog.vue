@@ -19,7 +19,7 @@
             <div class="upper-container">
               <v-label><h2 class="left-title">摂取したカロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
-                <h1 class="goal-cal-disp">{{ getintakeCalorie}}kcal</h1>
+                <h1 class="goal-cal-disp">{{ getintakeCalorie}}</h1>
               </v-sheet>
             </div>
           </v-col>
