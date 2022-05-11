@@ -44,9 +44,12 @@
 
 <script>
 
-var url = "http://localhost:50000/sites/";
-var ADMIN_CODE = 100;
+const DOMAINE = 'http://localhost:8000/';
+const CONTEXT_PATH = "calocalo/";
+const LOGIN_URL= `login/`;
+const BASE_URL = DOMAINE + CONTEXT_PATH;
 
+var ADMIN_CODE = 100;
 
 import axios from 'axios'
 
@@ -60,12 +63,6 @@ export default {
     user: {},
   }),
   computed: {
-    getempId() {
-      return this.$store.state.empId;
-    },
-    getpassword() {
-      return this.$store.state.password;
-    },
   },
   methods: {
       submit() {
@@ -74,7 +71,6 @@ export default {
           empId: this.user.empId,
           password: this.user.password,
         });
-        localStorage.emp_id = this.user.empId;
         var loginInfo = {
           password:vm.user.password
         }
@@ -82,8 +78,7 @@ export default {
       },
       loginAuth(loginInfo, emp_id) {
         var vm = this;
-        // axios.post(BASE_URL + LOGIN_URL + emp_id, loginInfo)
-        axios.get(url + emp_id, loginInfo)
+        axios.post(BASE_URL + LOGIN_URL + emp_id, loginInfo)
         .then( res => {
           if (res.data.login){
             localStorage.emp_id = emp_id;
