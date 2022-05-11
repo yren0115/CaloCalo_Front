@@ -138,23 +138,11 @@ export default {
     },
 
    fetchGoalCalories(emp_id)  {
-     const url = 'http://localhost:3000/sites/'
       var vm = this
-      // axios.get(BASE_URL +EMP_GOAL_URL+ localStorage.emp_id)
-      axios.get(url)
+      axios.get(BASE_URL + EMP_GOAL_URL + emp_id)
       .then(function (response) {
-        emp_id;
-        // not change reactively 
-        // var calorieObj = response.data;// {goal_calorie:100}
-        // vm.$store.dispatch("setGoalCalo", {
-        // goalCalorie: calorieObj
-        // })
         vm.goalCalorie = response.data.goal_calorie;
-        console.log(response.data.goal_calorie); // tadasii
-      }).catch(function () {
-
       })
-
    }, 
 
    foodCalories()  {
