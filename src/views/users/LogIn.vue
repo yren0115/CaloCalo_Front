@@ -61,8 +61,12 @@ export default {
   data: ()=> ({
     showPassword: false,
     user: {},
+    loginFailedStatus:false
   }),
   computed: {
+    loginFailed(){
+      return this.loginFailedStatus;
+    }
   },
   methods: {
       submit() {
@@ -85,12 +89,11 @@ export default {
             if (res.data.admin === ADMIN_CODE){
             vm.$router.push('/admin/userpage/');
            }else{
-             console.log('succeed login')
             vm.$router.push('/usertop');
            }
           }else{
               //ログイン失敗処理
-              vm.loginStatus = true;
+              vm.loginFailedStatus = true;
               // empIdをどうやって空にするか
               vm.user.empId = 0;
               vm.user.password = 'qazplm';
