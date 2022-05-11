@@ -45,10 +45,9 @@
 
 const DOMAINE = 'http://localhost:8000/';
 const CONTEXT_PATH = "calocalo/";
-const LOGIN_URL= `login/`;
 const BASE_URL = DOMAINE + CONTEXT_PATH;
-
-var ADMIN_CODE = 100;
+const LOGIN_URL= `login/`;
+const ADMIN_CODE = 100;
 
 import axios from 'axios'
 
@@ -86,7 +85,6 @@ export default {
         .then( res => {
         console.log('submit')
           if (res.data.login_status){
-            console.log(res.data.login_status);
             localStorage.emp_id = emp_id;
             if (res.data.admin_id === ADMIN_CODE){
             vm.$router.push('/admin/userpage/');
@@ -95,22 +93,14 @@ export default {
             vm.$router.push('/usertop');
            }
           }else{
-              //ログイン失敗処理
               vm.loginFailedStatus = true;
-              // empIdをどうやって空にするか
+              // 時間があれば変更
               vm.user.empId = 0;
               vm.user.password = 'qazplm';
               return;
           }
           })
-          .catch(() => {
-          // set err
-          // err = err
-          })
         },
-      login: function() {
-        this.$router.push('/usertop')
-      },
   },
 };
 </script>
