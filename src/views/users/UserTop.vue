@@ -127,10 +127,8 @@ export default {
     vm.setIntakeFood(vm.selectedFood)
     var calorieObj = {calorie: null, date: new Date().toISOString().substring(0,10)}
     calorieObj.calorie = this.food.calorie;
-    axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
-      .then(() => {
-      })
-      await vm.fetchTotalCalorie();
+    await axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
+    await vm.fetchTotalCalorie();
     }
    },
 
