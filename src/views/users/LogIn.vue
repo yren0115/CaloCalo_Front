@@ -101,9 +101,6 @@ export default {
           }
           })
         },
-      login: function() {
-        this.$router.push('/usertop')
-      },
   },
 };
 </script>
