@@ -1,9 +1,9 @@
 const { default: axios } = require("axios");
 
-const DOMAINE = 'http://localhost:80/';
+const DOMAINE = 'http://localhost:8000/';
 const CONTEXT_PATH = "calocalo/";
-
 const BASE_URL = DOMAINE + CONTEXT_PATH;
+
 const LOGIN_URL= `login/`;
 const SIGNUP_URL= `signup/`;
 const EMP_GOAL_URL = `employee/info/`;

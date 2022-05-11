@@ -41,6 +41,7 @@
   </v-app>
 </template>
 
+<script src="calocalo.js"></script>
 <script>
 
 const DOMAINE = 'http://localhost:8000/';
