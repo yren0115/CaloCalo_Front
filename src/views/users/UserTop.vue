@@ -7,17 +7,10 @@
             <v-label><h2 class="left-title">本日の摂取カロリー入力欄</h2></v-label>
               <v-select :items="foodList" label="摂取した食品を選択してください" dense outlined v-model="selectedFood">
               </v-select>
-              <!-- <select id="food-list">
-              <option v-for="food in foodList" v-bind:key="food.id" v-on:change="selectedFoodId = $event.target.food.id" v-bind="food.name"></option><br>
-              </select> -->
-              <!-- <v-textarea solo name="input-7-4" label="摂取カロリーを入力" v-model="user.intakeCalorie">
-              </v-textarea> -->
                 <div class="btn-container">
                   <v-btn class="mr-4" v-on:click="submitUpdateCalorie" >submit</v-btn>
                 </div>
               </v-form>
-              <!--  -->
-              <!--  -->
               <v-label><h2 class="left-title-sub">本日の摂取カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
                 <h1 class="goal-cal-disp">{{ intakeCalorieToday }}kcal</h1>
@@ -31,7 +24,6 @@
               <v-label><h2 class="right-title">現在の目標カロリー</h2></v-label>
               <div class="goal-cal">
                 <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
-                  <!-- <h1 class="goal-cal-disp">{{ getgoalCalorie }}kcal</h1> -->
                   <h1 class="goal-cal-disp">{{ goalCalorie }}kcal</h1>
                 </v-sheet>
               </div>
@@ -46,9 +38,6 @@
         </v-row>
   </v-container>
 </template>
-<!-- user.intakeCalorie -->
-
-<!-- <script src="../calocalo.js"></script> -->
 
 <script>
 const PROTOCOLE = 'http://'
@@ -72,9 +61,6 @@ export default {
     vm.fetchGoalCalories(localStorage.emp_id);
   },
 
-  components: {
-  },
-
   data: ()=> ({
     drawer: null,
     user: {},
@@ -92,12 +78,6 @@ export default {
   }),
 
    computed: {
-    getintakeCalorie: function() {
-      return this.$store.state.intakeCalorie;
-    },
-    getgoalCalorie: function() {
-      return this.$store.state.goalCalorie.goal_calorie;
-    },
     calorieAbailable: function() {
       return this.goalCalorie - this.calorieToday;
     },
@@ -107,11 +87,6 @@ export default {
   },
 
   methods: {
-    submit() {
-      this.$store.dispatch("setcalo", {
-        intakeCalorie: this.user.intakeCalorie,
-      });
-    },
 
     fetchFoodList() {
       var vm = this
