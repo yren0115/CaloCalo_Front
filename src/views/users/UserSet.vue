@@ -47,7 +47,7 @@ export default ({
     user: {},
     numValue: 0,
     menuflag: 0,
-    empId: 2,
+    empId: 1,
     goalCalorie: 0,
     title: "",
     inputRules: [
@@ -87,7 +87,7 @@ export default ({
       const empId = this.getempId
       var vm = this
       axios
-      .patch(URL+this.empId, {
+      .patch(URL+vm.empId, {
         id: empId,
         goalcalorie: vm.goalCalorie,
       })

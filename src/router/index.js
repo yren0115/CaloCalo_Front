@@ -16,7 +16,7 @@ Vue.use(VueRouter)
 var Auth = {
   loggedIn: false,
   login: function() { this.loggedIn = true },
-  logout: function() { this.loggedIn = false }  
+  logout: function() { this.loggedIn = false }
 };
 
 // var Login = {

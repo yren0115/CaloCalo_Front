@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    empId: '1',
+    empId: 1,
     password:'qazplm',
     adminId: '1',
     adminPass: 'abc',
