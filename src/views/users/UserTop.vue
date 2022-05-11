@@ -57,12 +57,11 @@ const PORT = ':8000/'
 const CONTEXT_PATH = "calocalo/";
 const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 
-// const EMP_GOAL_URL = `employee/info/`;
-// const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
-// const EMP_SUBMIT_RECORD_URL = 'submit/food/'
+const FOODS_URL= `food_list/`;
+const EMP_GOAL_URL = `employee/info/`;
+const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
+const EMP_SUBMIT_RECORD_URL = 'submit/food/'
 import axios from "axios";
-
-// const url = 'http://localhost:3000/sites/'
 
 export default {
   name: 'UserTop',
@@ -81,7 +80,7 @@ export default {
     user: {},
     menuflag: 0,
     foodList:[],
-    foodListObject:{},
+    foodObjectList:{},
     selectedFoodId:null,
     foodName:null,
     food:{name:null, id:null, calorie:null},
@@ -114,28 +113,24 @@ export default {
     },
 
     fetchFoodList() {
-      var url = 'http://localhost:50000/sites/';
       var vm = this
-      console.log('fetchFL');
-      axios.get(url)
+      axios.get(BASE_URL + FOODS_URL)
       .then(function (response) {
-        console.log(response.data.food_list)
-        vm.foodListObject = response.data.food_list
-        for (var i = 0; i < vm.foodListObject.length; i++) {
-          vm.foodList.push(vm.foodListObject[i].name)
+        vm.foodObjectList = response.data.food_list;
+        for (var i = 0; i < vm.foodObjectList.length; i++) {
+          vm.foodList.push(vm.foodObjectList[i].name);
         }
-      }).catch(function () {
       })
     },
 
     setIntakeFood(foodName){
           console.log('setIntakeFood func');
       var vm = this
-      for (var i = 0; i < vm.foodListObject.length; i++) {
-        if (vm.foodListObject[i].name === foodName){
-          vm.food.id = vm.foodListObject[i].id;
-          vm.food.calorie = vm.foodListObject[i].calorie;
-          vm.food.name = vm.foodListObject[i].name;
+      for (var i = 0; i < vm.foodObjectList.length; i++) {
+        if (vm.foodObjectList[i].name === foodName){
+          vm.food.id = vm.foodObjectList[i].id;
+          vm.food.calorie = vm.foodObjectList[i].calorie;
+          vm.food.name = vm.foodObjectList[i].name;
           console.log(vm.food.name);
           break;
         }

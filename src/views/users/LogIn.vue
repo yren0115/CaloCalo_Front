@@ -41,12 +41,13 @@
   </v-app>
 </template>
 
-<script src="calocalo.js"></script>
 <script>
-
-const DOMAINE = 'http://localhost:8000/';
+const PROTOCOLE = 'http://'
+const DOMAINE = 'localhost';
+const PORT = ':8000/'
 const CONTEXT_PATH = "calocalo/";
-const BASE_URL = DOMAINE + CONTEXT_PATH;
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+
 const LOGIN_URL= `login/`;
 const ADMIN_CODE = 100;
 
