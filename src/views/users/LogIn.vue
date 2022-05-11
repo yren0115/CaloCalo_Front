@@ -100,10 +100,6 @@ export default {
               return;
           }
           })
-          .catch(() => {
-          // set err
-          // err = err
-          })
         },
       login: function() {
         this.$router.push('/usertop')
