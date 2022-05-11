@@ -22,7 +22,6 @@
                   <v-card-text>
                     <v-form v-on:submit.prevent="submit">
                       <v-text-field prepend-icon="mdi-account-circle" label="社員番号"  :value="empId"     v-model="user.empId" />
-                      <h3>{{ empId }}</h3>
                       <v-text-field v-bind:type="showPassword ? 'text' : 'password'"            prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' :            'mdi-eye-off'"  label="パスワード" @click:append="showPassword          =!showPassword"     v-model="user.password"/>
                       <v-card-actions>
                         <v-btn class="light-blue" type="submit">ログイン</v-btn>
@@ -56,12 +55,13 @@ import axios from 'axios'
 export default {
   name: 'LogIn',
   created:function() {
-    localStorage.emp_id = null;
+    localStorage.emp_id = 0;
   },
   data: ()=> ({
     showPassword: false,
     user: {},
-    loginFailedStatus:false
+    loginFailedStatus:false,
+    empId:0
   }),
   computed: {
     loginFailed(){
@@ -76,19 +76,22 @@ export default {
           password: this.user.password,
         });
         var loginInfo = {
-          password:vm.user.password
+          "password":vm.user.password
         }
         vm.loginAuth(loginInfo, vm.user.empId);
       },
       loginAuth(loginInfo, emp_id) {
         var vm = this;
-        axios.post(BASE_URL + LOGIN_URL + emp_id, loginInfo)
+        axios.post(BASE_URL+ LOGIN_URL + emp_id, loginInfo)
         .then( res => {
-          if (res.data.login){
+        console.log('submit')
+          if (res.data.login_status){
+            console.log(res.data.login_status);
             localStorage.emp_id = emp_id;
-            if (res.data.admin === ADMIN_CODE){
+            if (res.data.admin_id === ADMIN_CODE){
             vm.$router.push('/admin/userpage/');
            }else{
+            console.log('succeed login')
             vm.$router.push('/usertop');
            }
           }else{
@@ -100,7 +103,14 @@ export default {
               return;
           }
           })
+          .catch(() => {
+          // set err
+          // err = err
+          })
         },
+      login: function() {
+        this.$router.push('/usertop')
+      },
   },
 };
 </script>
