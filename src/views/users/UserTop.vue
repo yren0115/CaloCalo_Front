@@ -87,6 +87,7 @@ export default {
     goalCalorie:0,
     calorieToday:0,
     selectedFood:null,
+    disabledButton:true,
 
   }),
 
@@ -124,14 +125,12 @@ export default {
     },
 
     setIntakeFood(foodName){
-          console.log('setIntakeFood func');
       var vm = this
       for (var i = 0; i < vm.foodObjectList.length; i++) {
         if (vm.foodObjectList[i].name === foodName){
           vm.food.id = vm.foodObjectList[i].id;
           vm.food.calorie = vm.foodObjectList[i].calorie;
           vm.food.name = vm.foodObjectList[i].name;
-          console.log(vm.food.name);
           break;
         }
       }
@@ -145,63 +144,35 @@ export default {
       })
    }, 
 
-   foodCalories()  {
-
-   }, 
-
    async submitUpdateCalorie(){
+     if (this.selectedFood === null) {
+       return ;
+     }
     var vm = this;
-    var url = 'http://localhost:50003/sites/';
     vm.setIntakeFood(vm.selectedFood)
-    
     var calorieObj = {calorie: null, date: new Date().toISOString().substring(0,10)}
-    if (this.food.id === false) {
-      return ;
-    }else{
-
-      calorieObj.calorie = this.food.calorie;
-      await axios.post(url, calorieObj)
-      // axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + sessionStorage.getItem('emp_id'), calorieObj)
+    calorieObj.calorie = this.food.calorie;
+    axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
       .then(() => {
-
       })
       await vm.fetchTotalCalorie();
     }
    },
 
    fetchTotalCalorie(){
-     // #######
      var vm = this;
-     var url = 'http://localhost:50001/sites/';
-      axios.get(url )
+      var dateToday = {"date": new Date().toISOString().substring(0,10)}
+      axios.post(BASE_URL + EMP_INTAKE_CALO_URL + localStorage.emp_id, dateToday)
       .then((res) => {
         var existence = res.data.existence;
         if (existence){
-        vm.calorieToday = res.data.total_calories; // remporaly variable vm.user.total;
+        vm.calorieToday = res.data.total_calories; 
         } else {
           return ;
         }
       })
-
-     /* honban 
-      var vm = this;
-      var totalCaloUrl;
-      */
-
-      // axios.get(BASE_URL + EMP_INTAKE_CALO_URL + sessionStorage.getItem('emp_id'))
-
-      /* ############## honban #############
-    var dateRecord = {"date": new Date().toISOString().substring(0,10)}
-    axios.get(totalCaloUrl, dateRecord)
-      .then((res) => {
-        vm.calorieToday = res.data.total_calories; // remporaly variable vm.user.total;
-      })
-      ############## honban ############# */
    },
-  }
 };
-
-
 </script>
 
 <style scoped>
