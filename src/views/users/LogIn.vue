@@ -83,8 +83,7 @@ export default {
           if (res.data.login){
             localStorage.emp_id = emp_id;
             if (res.data.admin === ADMIN_CODE){
-            //  admin transition まだルート作ってない
-            vm.$router.push('/admin');
+            vm.$router.push('/admin/userpage/');
            }else{
              console.log('succeed login')
             vm.$router.push('/usertop');
