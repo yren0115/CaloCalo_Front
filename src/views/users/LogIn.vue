@@ -85,13 +85,11 @@ export default {
         var vm = this;
         axios.post(BASE_URL+ LOGIN_URL + emp_id, loginInfo)
         .then( res => {
-        console.log('submit')
           if (res.data.login_status){
             localStorage.emp_id = emp_id;
             if (res.data.admin_id === ADMIN_CODE){
             vm.$router.push('/admin/userpage/');
            }else{
-            console.log('succeed login')
             vm.$router.push('/usertop');
            }
           }else{
@@ -101,6 +99,8 @@ export default {
               vm.user.password = 'qazplm';
               return;
           }
+          }).catch(function(){
+            return ;
           })
         },
   },
