@@ -51,10 +51,12 @@
 <!-- <script src="../calocalo.js"></script> -->
 
 <script>
-// const DOMAINE = 'http://localhost:80/';
-// const CONTEXT_PATH = "calocalo/";
+const PROTOCOLE = 'http://'
+const DOMAINE = 'localhost';
+const PORT = ':8000/'
+const CONTEXT_PATH = "calocalo/";
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 
-// const BASE_URL = DOMAINE + CONTEXT_PATH;
 // const EMP_GOAL_URL = `employee/info/`;
 // const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
 // const EMP_SUBMIT_RECORD_URL = 'submit/food/'
@@ -67,10 +69,8 @@ export default {
 
   created:function() {
     var vm = this;
-    console.log('created');
     vm.fetchFoodList();
     vm.fetchGoalCalories(localStorage.emp_id);
-    console.log('created done');
   },
 
   components: {
@@ -107,26 +107,10 @@ export default {
   },
 
   methods: {
-    logout() {
-      this.$store.dispatch("auth", {
-        empId: '0',
-        password: 'qazplm'
-      });
-      this.$router.push('/login')
-    },
-
-    toUserLog() {
-      this.$router.push('/userlog')
-    },
-
     submit() {
       this.$store.dispatch("setcalo", {
         intakeCalorie: this.user.intakeCalorie,
       });
-    },
-
-    clear() {
-      this.$refs.form.reset();
     },
 
     fetchFoodList() {
