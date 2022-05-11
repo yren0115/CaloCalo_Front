@@ -18,7 +18,9 @@
             <div class="upper-container">
               <v-label><h2 class="left-title">摂取したカロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
-                <h1 class="goal-cal-disp">{{ getgoalCalorie }}kcal</h1>
+                <h1 v-if="recordExistence" class="goal-cal-disp">{{ getintakeCalorie }}kcal</h1>
+                <h1 v-else class="goal-cal-disp">{{ getintakeCalorie }}</h1>
+
               </v-sheet>
             </div>
           </v-col>
@@ -40,9 +42,6 @@
 <script>
 import axios from 'axios';
 
-function test(day){
-      console.log("requestLog " + day);
-}
 export default ({
   name: 'UserLog',
   components: {
@@ -54,7 +53,7 @@ export default ({
     drawer: null,
     user: {},
     menuflag: 0,
-    totalCalorie:100,
+    totalCalorie:null,
     goalCalorie:1000,
     logDate:new Date().toISOString().substring(0,10),
     recordExistence:false
@@ -62,6 +61,9 @@ export default ({
   }),
    computed: {
     getintakeCalorie: function() {
+      if (this.totalCalorie == null){
+        return 'No Record'
+      }
       return this.totalCalorie;
     },
     getgoalCalorie: function() {
@@ -79,7 +81,6 @@ export default ({
   },
   methods: {
     requestLog(){
-      test(this.logDate);
 
     },
     fetchTotalCalorie(){

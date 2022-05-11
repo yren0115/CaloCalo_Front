@@ -69,6 +69,7 @@ export default {
   },
   methods: {
       submit() {
+      var vm = this;
         this.$store.dispatch("auth", {
           empId: this.user.empId,
           password: this.user.password,
