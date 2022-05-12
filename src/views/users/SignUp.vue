@@ -20,7 +20,6 @@
                     <v-form>
                       <v-text-field prepend-icon="mdi-account-circle" label="社員番号"     v-model="empId" />
                       <v-text-field v-bind:type="showPassword ? 'text' :'password'"              prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye'    :         'mdi-eye-off'"  label="パスワード" @click:append="showPassword   =  !showPassword"      v-model="password"/>
-                      <!-- <v-select prepend-icon="mdi-flag-checkered" v-model="select" :items="items"       label="    目標カロリー" data-vv-name="select" required></v-select>-->
                       <v-text-field prepend-icon="mdi-flag-checkered" v-model.number="select" label="Outlined" placeholder="例:300   目標カロリーを入力欄" outlined dense></v-text-field>
                       <v-card-actions>
                         <v-btn color="light-green" @click="submitSignup">新規登録</v-btn>
@@ -61,18 +60,6 @@ export default {
       select: null,
       existence: false,
       existenceErr:false,
-      items: [
-        100,
-        200,
-        300,
-        400,
-        500,
-        600,
-        700,
-        800,
-        900,
-        1000,
-      ],
       createSuccess:null
 
   }),
