@@ -68,7 +68,6 @@ export default ({
   }),
    computed: {
     getintakeCalorie: function() {
-
       if (!this.recordExistence){
         return 'No Record';
       }
@@ -98,7 +97,8 @@ export default ({
         {"date": this.logDate})
         .then((res) => {
         vm.recordExistence = res.data.existence;
-        if (vm.existence){
+        console.log(vm.recordExistence);
+        if (vm.recordExistence){
         vm.totalCalorie = res.data.total_calories; 
         } else {
           vm.totalCalorie = null;
