@@ -20,9 +20,9 @@
                     <v-form>
                       <v-text-field prepend-icon="mdi-account-circle" label="社員番号"     v-model="empId" />
                       <v-text-field v-bind:type="showPassword ? 'text' :'password'"              prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye'    :         'mdi-eye-off'"  label="パスワード" @click:append="showPassword   =  !showPassword"      v-model="password"/>
-                      <v-select prepend-icon="mdi-flag-checkered" v-model="select" :items="items"       label="    目標カロリー" data-vv-name="select" required></v-select>
+                      <v-text-field prepend-icon="mdi-flag-checkered" v-model.number="select" label="Outlined" placeholder="例:300   目標カロリーを入力欄" outlined dense></v-text-field>
                       <v-card-actions>
-                        <v-btn color="light-green" @click="signup">新規登録</v-btn>
+                      <v-btn color="light-green" @click="submitSignup">新規登録</v-btn>
                       </v-card-actions>
                     </v-form>
                   </v-card-text>
@@ -40,28 +40,53 @@
 </template>
 
 <script>
+import axios from "axios";
+
+const PROTOCOLE = 'http://'
+const DOMAINE = 'localhost';
+const PORT = ':8000/'
+const CONTEXT_PATH = "calocalo/";
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+
+const EMP_EXISTENCE_URL = `employee/check/`;
+const SIGNUP_URL= `signup/`;
+
 export default {
   name: 'SignUp',
   data: ()=> ({
-    showPassword: false,
+      showPassword: false,
       empId:'',
       password:'',
       select: null,
-      items: [
-        '200kcal',
-        '400kcal',
-        '600kcal',
-        '800kcal',
-        '1000kcal',
-      ],
+      existence: false,
+      existenceErr:false,
+      createSuccess:null
+
   }),
   methods: {
-      submit() {
-        console.log(this.name,this.password)
+        submitSignup: async function() {
+        await this.createEmp()
+        if (this.createSuccess){
+          this.$router.push('/login')
+        }
       },
-      signup: function() {
-        this.$router.push('/mypage')
-      }
+      createEmp: async function() {
+        var vm = this;
+        await axios.get(BASE_URL + EMP_EXISTENCE_URL + vm.empId)
+        .then(function(res){
+          vm.existence = res.data.existence;
+        })
+        if (!vm.existence){
+          var EmpInfo = {emp_id:vm.empId , password:vm.password, goal_calories:vm.select}
+          // create new Emp: should separate above axios excution;
+          await axios.post(BASE_URL + SIGNUP_URL, EmpInfo)
+          .then(function(res){
+            vm.createSuccess = res.data.success;
+          }
+        )}else{
+          vm.existenceErr = true;
+        }
+      },
   },
 };
 </script>

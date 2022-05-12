@@ -13,14 +13,17 @@
               <h1 class="main-title">CaloCalo</h1>
               <div class="main-contents">
                 <v-card width="400px" class="mx-auto mt-5">
+
+
                   <p v-show="loginFailed" style="color:red">社員番号かIDが間違っています。</p>
+
+
                   <v-card-title>
                     <h1 class="display-1">ログイン</h1>
                   </v-card-title>
                   <v-card-text>
                     <v-form v-on:submit.prevent="submit">
                       <v-text-field prepend-icon="mdi-account-circle" label="社員番号"  :value="empId"     v-model="user.empId" />
-                      <h3>{{ empId }}</h3>
                       <v-text-field v-bind:type="showPassword ? 'text' : 'password'"            prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' :            'mdi-eye-off'"  label="パスワード" @click:append="showPassword          =!showPassword"     v-model="user.password"/>
                       <v-card-actions>
                         <v-btn class="light-blue" type="submit">ログイン</v-btn>
@@ -46,24 +49,37 @@
 var url = "http://localhost:50000/sites/";
 var ADMIN_CODE = 100;
 
+import { functionsIn } from "lodash";
+
+const PROTOCOLE = 'http://'
+const DOMAINE = 'localhost';
+const PORT = ':8000/'
+const CONTEXT_PATH = "calocalo/";
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+
+const LOGIN_URL= `login/`;
+const ADMIN_CODE = 100;
+
+
 import axios from 'axios'
 
 export default {
   name: 'LogIn',
   created:function() {
     localStorage.emp_id = null;
+    sessionStorage.setItem('emp_id', null)
+    localStorage.emp_id = 0;
   },
   data: ()=> ({
     showPassword: false,
     user: {},
+    loginFailedStatus:false,
+    empId:0
   }),
   computed: {
-    getempId() {
-      return this.$store.state.empId;
-    },
-    getpassword() {
-      return this.$store.state.password;
-    },
+    loginFailed(){
+      return this.loginFailedStatus;
+    }
   },
   methods: {
       submit() {
@@ -110,7 +126,33 @@ export default {
         this.$router.push('/usertop')
         sessionStorage.setItem('emp_id',1);
         this.$router.push('/usertop');
+        var loginInfo = {
+          "password":vm.user.password
+        }
+        vm.loginAuth(loginInfo, vm.user.empId);
       },
+      loginAuth(loginInfo, emp_id) {
+        var vm = this;
+        axios.post(BASE_URL+ LOGIN_URL + emp_id, loginInfo)
+        .then( res => {
+          if (res.data.login_status){
+            localStorage.emp_id = emp_id;
+            if (res.data.admin_id === ADMIN_CODE){
+            vm.$router.push('/admin/userpage/');
+           }else{
+            vm.$router.push('/usertop');
+           }
+          }else{
+              vm.loginFailedStatus = true;
+              // 時間があれば変更
+              vm.user.empId = 0;
+              vm.user.password = 'qazplm';
+              return;
+          }
+          }).catch(function(){
+            return ;
+          })
+        },
   },
 };
 </script>

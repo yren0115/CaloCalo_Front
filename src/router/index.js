@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import TopComp from '../views/users/TopComp.vue'
 import LogIn from '../views/users/LogIn.vue'
 import SignUp from '../views/users/SignUp.vue'
 import MyPage from '../views/users/MyPage.vue'
@@ -14,6 +15,11 @@ import FoodPage from '../views/admins/FoodPage.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    name: 'toppage',
+    component: TopComp 
+  },
   {
     path: '/login',
     name: 'login',
