@@ -30,7 +30,6 @@
               </div>
             </v-col>
         </v-row>
-        <h3>{{ adminLoginPass }}{{ adminPass }}</h3>
       </v-container>
     </v-main>
 
