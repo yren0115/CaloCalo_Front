@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import { functionsIn } from "lodash";
+
 const PROTOCOLE = 'http://'
 const DOMAINE = 'localhost';
 const PORT = ':8000/'
@@ -56,6 +58,7 @@ import axios from 'axios'
 export default {
   name: 'LogIn',
   created:function() {
+    sessionStorage.setItem('emp_id', null)
     localStorage.emp_id = 0;
   },
   data: ()=> ({
