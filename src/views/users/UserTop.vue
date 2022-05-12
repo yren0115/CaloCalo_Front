@@ -82,10 +82,10 @@ export default {
 
    computed: {
     calorieAbailable: function() {
-      return this.goalCalorie - (this.calorieToday / 2);
+      return this.goalCalorie - this.calorieToday;
     },
     intakeCalorieToday: function() {
-      return this.calorieToday / 2;
+      return this.calorieToday;
     }
   },
 
@@ -132,9 +132,7 @@ export default {
     vm.setIntakeFood(vm.selectedFood)
     var calorieObj = {take_calorie: null, date: new Date().toISOString().substring(0,10)}
     calorieObj.take_calorie = this.food.calorie;
-    console.log("in submit");
     await axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
-    console.log("2 submit");
     await vm.fetchTotalCalorie();
     },
 
