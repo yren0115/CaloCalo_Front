@@ -20,7 +20,8 @@
                     <v-form>
                       <v-text-field prepend-icon="mdi-account-circle" label="社員番号"     v-model="empId" />
                       <v-text-field v-bind:type="showPassword ? 'text' :'password'"              prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye'    :         'mdi-eye-off'"  label="パスワード" @click:append="showPassword   =  !showPassword"      v-model="password"/>
-                      <v-select prepend-icon="mdi-flag-checkered" v-model="select" :items="items"       label="    目標カロリー" data-vv-name="select" required></v-select>
+                      <!-- <v-select prepend-icon="mdi-flag-checkered" v-model="select" :items="items"       label="    目標カロリー" data-vv-name="select" required></v-select>-->
+                      <v-text-field prepend-icon="mdi-flag-checkered" v-model.number="select" label="Outlined" placeholder="例:300   目標カロリーを入力欄" outlined dense></v-text-field>
                       <v-card-actions>
                         <v-btn color="light-green" @click="submitSignup">新規登録</v-btn>
                       </v-card-actions>
@@ -61,23 +62,22 @@ export default {
       existence: false,
       existenceErr:false,
       items: [
-        '100kcal',
-        '200kcal',
-        '300kcal',
-        '400kcal',
-        '500kcal',
-        '600kcal',
-        '700kcal',
-        '800kcal',
-        '900kcal',
-        '1000kcal',
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900,
+        1000,
       ],
       createSuccess:null
 
   }),
   methods: {
         submitSignup: async function() {
-        localStorage.emp_id = this.empId;
         await this.createEmp()
         console.log("createSuccess: " + this.createSuccess);
         if (this.createSuccess){
@@ -94,7 +94,7 @@ export default {
         if (!vm.existence){
           console.log("create start...");
           console.log('vm select: ' + vm.select);
-          var EmpInfo = {emp_id:vm.empId , password:vm.password, goal_calorie:vm.select}
+          var EmpInfo = {emp_id:vm.empId , password:vm.password, goal_calories:vm.select}
           // create new Emp: should separate above axios excution;
           await axios.post(BASE_URL + SIGNUP_URL, EmpInfo)
           .then(function(res){
