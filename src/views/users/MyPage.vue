@@ -78,6 +78,7 @@ export default {
         empId: '0',
         password: 'qazplm',
       });
+      localStorage.emp_id = null;
       this.$router.push('/login')
     },
     toUserLog() {

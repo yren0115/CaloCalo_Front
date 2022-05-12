@@ -51,7 +51,6 @@ const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 const EMP_EXISTENCE_URL = `employee/check/`;
 const SIGNUP_URL= `signup/`;
 
-
 export default {
   name: 'SignUp',
   data: ()=> ({
@@ -94,7 +93,7 @@ export default {
         })
         if (!vm.existence){
           console.log("create start...");
-          
+          console.log('vm select: ' + vm.select);
           var EmpInfo = {emp_id:vm.empId , password:vm.password, goal_calorie:vm.select}
           // create new Emp: should separate above axios excution;
           await axios.post(BASE_URL + SIGNUP_URL, EmpInfo)
