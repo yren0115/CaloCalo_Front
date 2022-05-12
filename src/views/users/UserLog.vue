@@ -44,10 +44,8 @@ const DOMAINE = 'localhost';
 const PORT = ':8000/'
 const CONTEXT_PATH = "calocalo/";
 const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
-
 const EMP_GOAL_URL = `employee/info/`;
 const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
-
 export default ({
   name: 'UserLog',
   components: {
@@ -64,7 +62,6 @@ export default ({
     goalCalorie:0,
     logDate:new Date().toISOString().substring(0,10),
     recordExistence:false
-
   }),
    computed: {
     getintakeCalorie: function() {
@@ -90,7 +87,6 @@ export default ({
     requestLog(){
       this.fetchTotalCalorie();
     },
-
        fetchTotalCalorie(){
         var vm = this;
         axios.post(BASE_URL + EMP_INTAKE_CALO_URL + localStorage.emp_id, 
@@ -139,9 +135,6 @@ export default ({
   text-align: center;
   padding: 50px 0;
 }
-
-
-
 .reset-css {
   margin: 0;
   padding: 0;

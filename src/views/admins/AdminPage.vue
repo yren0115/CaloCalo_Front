@@ -70,9 +70,6 @@ export default {
       });
       this.$router.push('/login')
     },
-    toUserLog() {
-      this.$router.push('/userlog')
-    },
     subst0: function() {
       this.menuflag = 0;
       this.$router.push('/admin/userpage')

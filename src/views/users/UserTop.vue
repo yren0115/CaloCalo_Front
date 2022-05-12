@@ -46,23 +46,19 @@ const DOMAINE = 'localhost';
 const PORT = ':8000/'
 const CONTEXT_PATH = "calocalo/";
 const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
-
 const FOODS_URL= `food_list/`;
 const EMP_GOAL_URL = `employee/info/`;
 const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
 const EMP_SUBMIT_RECORD_URL = 'submit/food/'
 import axios from "axios";
-
 export default {
   name: 'UserTop',
-
   created:function() {
     var vm = this;
     vm.fetchFoodList();
     vm.fetchGoalCalories();
     vm.fetchTotalCalorie();
   },
-
   data: ()=> ({
     drawer: null,
     user: {},
@@ -77,9 +73,7 @@ export default {
     selectedFood:null,
     disabledButton:true
     // processing:false 
-
   }),
-
    computed: {
     calorieAbailable: function() {
       return this.goalCalorie - this.calorieToday;
@@ -88,9 +82,7 @@ export default {
       return this.calorieToday;
     }
   },
-
   methods: {
-
     fetchFoodList() {
       var vm = this
       axios.get(BASE_URL + FOODS_URL)
@@ -101,7 +93,6 @@ export default {
         }
       })
     },
-
     setIntakeFood(foodName){
       var vm = this
       for (var i = 0; i < vm.foodObjectList.length; i++) {
@@ -113,7 +104,6 @@ export default {
         }
       }
     },
-
    fetchGoalCalories()  {
       var vm = this
       axios.get(BASE_URL + EMP_GOAL_URL + localStorage.emp_id)
@@ -121,7 +111,6 @@ export default {
         vm.goalCalorie = response.data.goal_calorie;
       })
    }, 
-
    async submitUpdateCalorie(){
      if (this.selectedFood === null) {
        return ;
@@ -133,7 +122,6 @@ export default {
     await axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
     await vm.fetchTotalCalorie();
     },
-
    fetchTotalCalorie(){
      var vm = this;
       var dateToday = {"date": new Date().toISOString().substring(0,10)}

@@ -42,23 +42,17 @@
 </template>
 
 <script>
-// import { functionsIn } from "lodash";
-
 const PROTOCOLE = 'http://'
 const DOMAINE = 'localhost';
 const PORT = ':8000/'
 const CONTEXT_PATH = "calocalo/";
 const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
-
 const LOGIN_URL= `login/`;
 const ADMIN_CODE = 100;
-
 import axios from 'axios'
-
 export default {
   name: 'LogIn',
   created:function() {
-    sessionStorage.setItem('emp_id', null)
     localStorage.emp_id = 0;
   },
   data: ()=> ({
