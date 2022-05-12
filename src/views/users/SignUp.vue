@@ -79,7 +79,6 @@ export default {
   methods: {
         submitSignup: async function() {
         await this.createEmp()
-        console.log("createSuccess: " + this.createSuccess);
         if (this.createSuccess){
           this.$router.push('/login')
         }
@@ -89,18 +88,13 @@ export default {
         await axios.get(BASE_URL + EMP_EXISTENCE_URL + vm.empId)
         .then(function(res){
           vm.existence = res.data.existence;
-          console.log("existence " + vm.existence)
         })
         if (!vm.existence){
-          console.log("create start...");
-          console.log('vm select: ' + vm.select);
           var EmpInfo = {emp_id:vm.empId , password:vm.password, goal_calories:vm.select}
           // create new Emp: should separate above axios excution;
           await axios.post(BASE_URL + SIGNUP_URL, EmpInfo)
           .then(function(res){
             vm.createSuccess = res.data.success;
-            console.log(vm.createSuccess);
-          console.log("create end...")
           }
         )}else{
           vm.existenceErr = true;
