@@ -96,9 +96,7 @@ export default {
       axios.get(BASE_URL + FOODS_URL)
       .then(function (response) {
         vm.foodObjectList = response.data.food_list;
-        console.log(vm.foodObjectList);
         for (var i = 0; i < vm.foodObjectList.length; i++) {
-        console.log(vm.foodObjectList[i].food_name);
           vm.foodList.push(vm.foodObjectList[i].food_name);
         }
       })
