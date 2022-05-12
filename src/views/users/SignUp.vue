@@ -22,7 +22,7 @@
                       <v-text-field v-bind:type="showPassword ? 'text' :'password'"              prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye'    :         'mdi-eye-off'"  label="パスワード" @click:append="showPassword   =  !showPassword"      v-model="password"/>
                       <v-text-field prepend-icon="mdi-flag-checkered" v-model.number="select" label="Outlined" placeholder="例:300   目標カロリーを入力欄" outlined dense></v-text-field>
                       <v-card-actions>
-                        <v-btn color="light-green" @click="submitSignup">新規登録</v-btn>
+                      <v-btn color="light-green" @click="submitSignup">新規登録</v-btn>
                       </v-card-actions>
                     </v-form>
                   </v-card-text>
