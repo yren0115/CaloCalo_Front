@@ -68,13 +68,13 @@ export default {
         '800kcal',
         '1000kcal',
       ],
-      succeed:null
+      success:null
 
   }),
   methods: {
       signup: function() {
         this.createEmp()
-        if (this.succeed){
+        if (this.success){
           this.$router.push('/mypage')
         }
           return;
@@ -89,7 +89,7 @@ export default {
           var EmpInfo = {emp_id:vm.empId , password:vm.password, goal_calorie:vm.select}
           await axios.post(BASE_URL + SIGNUP_URL, EmpInfo)
           .then(function(res){
-            vm.succeed = res.data.succeed;
+            vm.success = res.data.success;
           }
         )}else{
           vm.existenceErr = true;
