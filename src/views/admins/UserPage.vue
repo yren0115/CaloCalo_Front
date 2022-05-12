@@ -19,9 +19,20 @@
 </template>
 <!-- user.intakeCalorie -->
 <script>
+const PROTOCOLE = 'http://'
+const DOMAINE = 'localhost';
+const PORT = ':8000/'
+const CONTEXT_PATH = "calocalo/";
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+// const FOODS_URL= `food_list/`;
+// const EMP_GOAL_URL = `employee/info/`;
+// const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
+// const EMP_SUBMIT_RECORD_URL = 'submit/food/'
+//管理者側パス
+const ADM_EMP_DEL_URL = `admin/delete/employee/`;
+// const ADM_POSTFOOD_URL = `admin/add/foodlist`;
 import axios from "axios";
 
-const URL = `http://localhost:3000/goalcalories/`;
 const param = {key: [1,2,3]}
 
 export default {
@@ -64,8 +75,17 @@ export default {
       this.$refs.form.reset();
     },
     deleteEmp() {
+      if (this.empId === '') {
+       return ;
+     }
       axios
-      .delete(URL+this.empId, {data: param})
+      .delete(BASE_URL+ADM_EMP_DEL_URL+this.empId, {data: param})
+      .then(function (response){
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
     },
   },
   watch: {

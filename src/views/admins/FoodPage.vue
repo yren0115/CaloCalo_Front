@@ -6,15 +6,16 @@
             <v-form ref="form">
             <v-label><h1 class="left-title">食品登録ページ</h1></v-label>
               <v-label><h2 class="left-title-sub">食品名</h2></v-label>
-              <v-text-field label="食品名" placeholder="食品名を入力してください" outlined dense v-model="foodName">
+              <v-text-field label="食品名" placeholder="食品名を入力してください" outlined dense v-model="foodData.food_name">
               </v-text-field>
               <v-label><h2 class="left-title-sub">食品カロリー</h2></v-label>
-              <v-text-field label="食品カロリー" placeholder="食品カロリーを入力してください" outlined dense v-model.number="foodCalo">
+              <v-text-field label="食品カロリー" placeholder="食品カロリーを入力してください" outlined dense v-model="foodData.food_calorie">
               </v-text-field>
                 <div class="btn-container">
                   <v-btn class="mr-4" v-on:click="postFood(); clear()">SUBMIT</v-btn>
                 </div>
             </v-form>
+            {{ foodData }}
           </div>
           </v-col>
         </v-row>
@@ -22,9 +23,21 @@
 </template>
 <!-- user.intakeCalorie -->
 <script>
+const PROTOCOLE = 'http://'
+const DOMAINE = 'localhost';
+const PORT = ':8000/'
+const CONTEXT_PATH = "calocalo/";
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+// const FOODS_URL= `food_list/`;
+// const EMP_GOAL_URL = `employee/info/`;
+// const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
+// const EMP_SUBMIT_RECORD_URL = 'submit/food/'
+//管理者側パス
+// const ADM_EMP_DEL_URL = `admin/delete/employee/`;
+const ADM_POSTFOOD_URL = `admin/add/foodlist/`;
 import axios from "axios";
 
-const URL = "http://localhost:3000/foodlists/"
+// const URL = "http://localhost:3000/foodlists/"
 
 export default {
   name: 'UserTop',
@@ -34,8 +47,9 @@ export default {
     drawer: null,
     user: {},
     menuflag: 0,
-    foodName: '',
-    FoodCalo: 0,
+    foodData: {},
+    food_name: '',
+    food_calorie: '',
   }),
    computed: {
     getintakeCalorie: function() {
@@ -66,10 +80,7 @@ export default {
     },
     postFood() {
       axios
-      .post(URL, {
-        foodName: this.foodName,
-        foodCalo: this.foodCalo,
-      })
+      .post(BASE_URL+ADM_POSTFOOD_URL, this.foodData)
       .then(function (response) {
         console.log(response)
       })

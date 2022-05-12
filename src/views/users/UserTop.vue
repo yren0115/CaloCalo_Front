@@ -129,7 +129,7 @@ export default {
       .then((res) => {
         var existence = res.data.existence;
         if (existence){
-        vm.calorieToday = res.data.total_calories; 
+        vm.calorieToday = res.data.total_calories;
         } else {
           return ;
         }
