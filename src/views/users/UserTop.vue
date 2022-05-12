@@ -60,7 +60,7 @@ export default {
     var vm = this;
     vm.fetchFoodList();
     vm.fetchGoalCalories();
-    vm.fetchGoalCalories();
+    vm.fetchTotalCalorie();
   },
 
   data: ()=> ({
