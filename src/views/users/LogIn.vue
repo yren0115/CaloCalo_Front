@@ -14,7 +14,9 @@
               <div class="main-contents">
                 <v-card width="400px" class="mx-auto mt-5">
 
+
                   <p v-show="loginFailed" style="color:red">社員番号かIDが間違っています。</p>
+
 
                   <v-card-title>
                     <h1 class="display-1">ログイン</h1>
@@ -42,6 +44,11 @@
 </template>
 
 <script>
+// import { functionsIn } from "lodash";
+
+var url = "http://localhost:50000/sites/";
+var ADMIN_CODE = 100;
+
 import { functionsIn } from "lodash";
 
 const PROTOCOLE = 'http://'
@@ -53,11 +60,13 @@ const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 const LOGIN_URL= `login/`;
 const ADMIN_CODE = 100;
 
+
 import axios from 'axios'
 
 export default {
   name: 'LogIn',
   created:function() {
+    localStorage.emp_id = null;
     sessionStorage.setItem('emp_id', null)
     localStorage.emp_id = 0;
   },
@@ -79,6 +88,44 @@ export default {
           empId: this.user.empId,
           password: this.user.password,
         });
+        localStorage.emp_id = this.user.empId;
+        var loginInfo = {
+          password:vm.user.password
+        }
+        vm.loginAuth(loginInfo, vm.user.empId);
+      },
+      loginAuth(loginInfo, emp_id) {
+        var vm = this;
+        // axios.post(BASE_URL + LOGIN_URL + emp_id, loginInfo)
+        axios.get(url + emp_id, loginInfo)
+        .then( res => {
+          if (res.data.login){
+            localStorage.emp_id = emp_id;
+            if (res.data.admin === ADMIN_CODE){
+            //  admin transition まだルート作ってない
+            vm.$router.push('/admin');
+           }else{
+             console.log('succeed login')
+            vm.$router.push('/usertop');
+           }
+          }else{
+              //ログイン失敗処理
+              vm.loginStatus = true;
+              // empIdをどうやって空にするか
+              vm.user.empId = 0;
+              vm.user.password = 'qazplm';
+              return;
+          }
+          })
+          .catch(() => {
+          // set err
+          // err = err
+          })
+        },
+      login: function() {
+        this.$router.push('/usertop')
+        sessionStorage.setItem('emp_id',1);
+        this.$router.push('/usertop');
         var loginInfo = {
           "password":vm.user.password
         }

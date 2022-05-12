@@ -87,6 +87,10 @@ export default ({
     }
   },
   methods: {
+    submit() {
+      this.$store.dispatch("setcalo", {
+        intakeCalorie: this.user.intakeCalorie,
+      });
     requestLog(){
       this.fetchTotalCalorie();
     },

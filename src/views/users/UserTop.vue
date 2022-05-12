@@ -47,6 +47,13 @@ const PORT = ':8000/'
 const CONTEXT_PATH = "calocalo/";
 const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 
+const BASE_URL = DOMAINE + CONTEXT_PATH;
+// const EMP_GOAL_URL = `employee/info/`;
+// const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
+const EMP_SUBMIT_RECORD_URL = 'submit/food/'
+const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
+// const EMP_SUBMIT_RECORD_URL = 'submit/food/'
+
 const FOODS_URL= `food_list/`;
 const EMP_GOAL_URL = `employee/info/`;
 const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
@@ -116,6 +123,10 @@ export default {
 
    fetchGoalCalories()  {
       var vm = this
+      // axios.get(BASE_URL +EMP_GOAL_URL+ localStorage.emp_id)
+      axios.get(url)
+      // axios.get(BASE_URL +EMP_GOAL_URL+sessionStorage.getItem('emp_id'))
+      axios.get(url )
       axios.get(BASE_URL + EMP_GOAL_URL + localStorage.emp_id)
       .then(function (response) {
         vm.goalCalorie = response.data.goal_calorie;
@@ -127,6 +138,20 @@ export default {
        return ;
      }
     var vm = this;
+    var calorieObj = {calorie: null, date: new Date().toISOString().substring(0,10)}
+    if (this.food.id === false) {
+      return 
+    }else{
+      calorieObj.calorie =  this.food.calorie;
+      axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
+    axios.put('submit/food/{emp_id')
+      // axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + sessionStorage.getItem('emp_id'), calorieObj)
+      .then(() => {
+        vm.fetchTotalCalorie();        
+      })
+
+
+    }
     vm.setIntakeFood(vm.selectedFood)
     var calorieObj = {take_calorie: null, date: new Date().toISOString().substring(0,10)}
     calorieObj.take_calorie = this.food.calorie;
