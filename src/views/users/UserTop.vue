@@ -8,7 +8,8 @@
               <v-select :items="foodList" label="摂取した食品を選択してください" dense outlined v-model="selectedFood">
               </v-select>
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="submitUpdateCalorie" >submit</v-btn>
+                  <!-- <v-btn class="mr-4" :disabled="processing" v-on:click.prevent="submitUpdateCalorie" >submit</v-btn> -->
+                  <v-btn class="mr-4" v-on:click.prevent="submitUpdateCalorie" >submit</v-btn>
                 </div>
               </v-form>
               <v-label><h2 class="left-title-sub">本日の摂取カロリー</h2></v-label>
@@ -58,7 +59,8 @@ export default {
   created:function() {
     var vm = this;
     vm.fetchFoodList();
-    vm.fetchGoalCalories(localStorage.emp_id);
+    vm.fetchGoalCalories();
+    vm.fetchGoalCalories();
   },
 
   data: ()=> ({
@@ -73,16 +75,17 @@ export default {
     goalCalorie:0,
     calorieToday:0,
     selectedFood:null,
-    disabledButton:true,
+    disabledButton:true
+    // processing:false 
 
   }),
 
    computed: {
     calorieAbailable: function() {
-      return this.goalCalorie - this.calorieToday;
+      return this.goalCalorie - (this.calorieToday / 2);
     },
     intakeCalorieToday: function() {
-      return this.calorieToday;
+      return this.calorieToday / 2;
     }
   },
 
@@ -93,8 +96,10 @@ export default {
       axios.get(BASE_URL + FOODS_URL)
       .then(function (response) {
         vm.foodObjectList = response.data.food_list;
+        console.log(vm.foodObjectList);
         for (var i = 0; i < vm.foodObjectList.length; i++) {
-          vm.foodList.push(vm.foodObjectList[i].name);
+        console.log(vm.foodObjectList[i].food_name);
+          vm.foodList.push(vm.foodObjectList[i].food_name);
         }
       })
     },
@@ -102,18 +107,18 @@ export default {
     setIntakeFood(foodName){
       var vm = this
       for (var i = 0; i < vm.foodObjectList.length; i++) {
-        if (vm.foodObjectList[i].name === foodName){
-          vm.food.id = vm.foodObjectList[i].id;
-          vm.food.calorie = vm.foodObjectList[i].calorie;
-          vm.food.name = vm.foodObjectList[i].name;
+        if (vm.foodObjectList[i].food_name === foodName){
+          vm.food.id = vm.foodObjectList[i].food_id;
+          vm.food.calorie = vm.foodObjectList[i].calories;
+          vm.food.name = vm.foodObjectList[i].food_name;
           break;
         }
       }
     },
 
-   fetchGoalCalories(emp_id)  {
+   fetchGoalCalories()  {
       var vm = this
-      axios.get(BASE_URL + EMP_GOAL_URL + emp_id)
+      axios.get(BASE_URL + EMP_GOAL_URL + localStorage.emp_id)
       .then(function (response) {
         vm.goalCalorie = response.data.goal_calorie;
       })
@@ -125,12 +130,13 @@ export default {
      }
     var vm = this;
     vm.setIntakeFood(vm.selectedFood)
-    var calorieObj = {calorie: null, date: new Date().toISOString().substring(0,10)}
-    calorieObj.calorie = this.food.calorie;
+    var calorieObj = {take_calorie: null, date: new Date().toISOString().substring(0,10)}
+    calorieObj.take_calorie = this.food.calorie;
+    console.log("in submit");
     await axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
+    console.log("2 submit");
     await vm.fetchTotalCalorie();
-    }
-   },
+    },
 
    fetchTotalCalorie(){
      var vm = this;
@@ -145,7 +151,8 @@ export default {
         }
       })
    },
-};
+  }
+}
 </script>
 
 <style scoped>
