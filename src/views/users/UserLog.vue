@@ -5,10 +5,11 @@
           <v-col cols="6" class="left-col">
             <div class="upper-container">
               <v-sheet elevation="50" class="mx-auto" height="50" width="500" rounded shaped>
-                <p class="date-disp"><v-icon>mdi-step-backward</v-icon>  過去ログ参照(Date): <input type="date" v-bind:value="logDate" v-on:change="logDate = $event.target.value; requestLog();">
+                <p class="date-disp"><v-icon>mdi-step-backward</v-icon>  過去ログ参照(Date): <input type="date" v-bind:value="logDate" 
+                        v-on:change="logDate = $event.target.value; requestLog();">
                 <v-icon>mdi-step-forward</v-icon></p>
               </v-sheet>
-              <v-label><h2 class="upper-left-title">目標摂取カロリー</h2></v-label>
+              <v-label><h2 class="upper-left-title">目標カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
                 <h1 class="goal-cal-disp">{{ getgoalCalorie }}kcal</h1>
               </v-sheet>
@@ -18,9 +19,7 @@
             <div class="upper-container">
               <v-label><h2 class="left-title">摂取したカロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="150" width="500" rounded shaped>
-                <h1 v-if="recordExistence" class="goal-cal-disp">{{ getintakeCalorie }}kcal</h1>
-                <h1 v-else class="goal-cal-disp">{{ getintakeCalorie }}</h1>
-
+                <h1 class="goal-cal-disp">{{ getintakeCalorie}}</h1>
               </v-sheet>
             </div>
           </v-col>
@@ -30,8 +29,7 @@
             <div class="lower-container">
               <v-label><h2 class="lower-title">過不足カロリー</h2></v-label>
               <v-sheet elevation="50" class="mx-auto" height="200" width="1330" rounded shaped>
-                <h1 v-if="recordExistence" class="goal-cal-disp">{{ calculateCalorie + 'kcal'}}</h1>
-                <h1 v-else class="goal-cal-disp">{{ calculateCalorie }}</h1>
+                <h1 class="goal-cal-disp">{{ calculateCalorie }}</h1>
               </v-sheet>
             </div>
         </v-col>
@@ -41,39 +39,49 @@
 
 <script>
 import axios from 'axios';
+const PROTOCOLE = 'http://'
+const DOMAINE = 'localhost';
+const PORT = ':8000/'
+const CONTEXT_PATH = "calocalo/";
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+
+const EMP_GOAL_URL = `employee/info/`;
+const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
 
 export default ({
   name: 'UserLog',
   components: {
   },
   created:function() {
-    // 今日の記録のfetch
+    this.fetchGoalCalories();
+    this.fetchTotalCalorie();
   },
   data: ()=> ({
     drawer: null,
     user: {},
     menuflag: 0,
-    totalCalorie:null,
-    goalCalorie:1000,
+    totalCalorie:0,
+    goalCalorie:0,
     logDate:new Date().toISOString().substring(0,10),
     recordExistence:false
 
   }),
    computed: {
     getintakeCalorie: function() {
-      if (this.totalCalorie == null){
-        return 'No Record'
+
+      if (!this.recordExistence){
+        return 'No Record';
       }
-      return this.totalCalorie;
+      return this.totalCalorie + 'kcal';
     },
     getgoalCalorie: function() {
       return this.goalCalorie;
     },
     calculateCalorie: function() {
-      if (this.totalCalorie == null){
-        return 'No Record'
+      if (!this.recordExistence){
+        return 'No Record';
       }
-      return this.goalCalorie - this.totalCalorie;
+      return (this.goalCalorie - this.totalCalorie) + 'kcal';
     },
     recordDisplay:function() {
       return this.recordExistence;
@@ -81,55 +89,30 @@ export default ({
   },
   methods: {
     requestLog(){
-
+      this.fetchTotalCalorie();
     },
-    fetchTotalCalorie(){
-    var vm = this;
-    var url = 'http://localhost:50001/sites/';// emp_id at the end of the url 
-    axios.get(url) // dateObj {"date":logDate}第2引数
-    .then((res) => {
-    if (res.data.existence){
-    vm.totalCalorie = res.data.total_calories; // remporaly variable vm.user.total;
-    } else {
-    vm.totalCalorie = null;
-    return ;
-    }
-    })
 
-     /* honban 
-      var vm = this;
-      var totalCaloUrl;
-      */
-
-      // axios.get(BASE_URL + EMP_INTAKE_CALO_URL + sessionStorage.getItem('emp_id'))
-
-      /* ############## honban #############
-    var dateRecord = {"date": new Date().toISOString().substring(0,10)}
-    axios.get(totalCaloUrl, dateRecord)
-      .then((res) => {
-        vm.calorieToday = res.data.total_calories; // remporaly variable vm.user.total;
+       fetchTotalCalorie(){
+        var vm = this;
+        axios.post(BASE_URL + EMP_INTAKE_CALO_URL + localStorage.emp_id, 
+        {"date": this.logDate})
+        .then((res) => {
+        vm.recordExistence = res.data.existence;
+        if (vm.existence){
+        vm.totalCalorie = res.data.total_calories; 
+        } else {
+          vm.totalCalorie = null;
+          return ;
+        }
       })
-      ############## honban ############# */
-      },
+   },
       
-      fetchGoalCalories(emp_id)  {
-      const url = 'http://localhost:3000/sites/'
+      fetchGoalCalories()  {
       var vm = this
-      // axios.get(BASE_URL +EMP_GOAL_URL+sessionStorage.getItem('emp_id'))
-      axios.get(url)
+      axios.get(BASE_URL + EMP_GOAL_URL + localStorage.emp_id)
       .then(function (response) {
-        emp_id;
-    // not change reactively 
-        // var calorieObj = response.data;// {goal_calorie:100}
-        // vm.$store.dispatch("setGoalCalo", {
-        // goalCalorie: calorieObj
-        // })
         vm.goalCalorie = response.data.goal_calorie;
-        console.log(response.data.goal_calorie); // tadasii
-      }).catch(function () {
-
-      })
-   }, 
+      })}, 
     },
 });
 </script>

@@ -42,10 +42,20 @@
 <script>
 import axios from "axios";
 
+const PROTOCOLE = 'http://'
+const DOMAINE = 'localhost';
+const PORT = ':8000/'
+const CONTEXT_PATH = "calocalo/";
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+
+const EMP_EXISTENCE_URL = `employee/check/`;
+const SIGNUP_URL= `signup/`;
+
+
 export default {
   name: 'SignUp',
   data: ()=> ({
-    showPassword: false,
+      showPassword: false,
       empId:'',
       password:'',
       select: null,
@@ -58,30 +68,33 @@ export default {
         '800kcal',
         '1000kcal',
       ],
+      succeed:null
+
   }),
   methods: {
-      submit() {
-        console.log(this.name,this.password)
-      },
       signup: function() {
-        this.$router.push('/mypage')
+        this.createEmp()
+        if (this.succeed){
+          this.$router.push('/mypage')
+        }
+          return;
       },
       createEmp: async function() {
         var vm = this;
-        await axios.get()
+        await axios.get(BASE_URL + EMP_EXISTENCE_URL + vm.emp_id)
         .then(function(res){
           vm.existence = res.data.existence;
         })
         if (vm.existence){
-        await axios.post()
-        .then(function(){
-
-        }
+          var EmpInfo = {emp_id:vm.empId , password:vm.password, goal_calorie:vm.select}
+          await axios.post(BASE_URL + SIGNUP_URL, EmpInfo)
+          .then(function(res){
+            vm.succeed = res.data.succeed;
+          }
         )}else{
           vm.existenceErr = true;
           return ;
         }
-        
       },
   },
 };

@@ -15,7 +15,7 @@
           <v-btn large class="menu-btn" v-on:click="subst0"><v-icon>mdi-human-handsdown</v-icon>MyPage</v-btn>
         </v-row>
          <v-row class="vertical-spacer" justify="center">
-             <v-btn large class="menu-btn" v-on:click="subst1"><v-icon>mdi-file </v-icon>Log</v-btn>
+             <v-btn large class="menu-btn" v-on:click="subst1"><v-icon>mdi-file </v-icon>LogPage</v-btn>
         </v-row>
         <v-row class="vertical-spacer" justify="center">
           <v-btn large class="menu-btn" v-on:click="subst2"><v-icon>mdi-cog</v-icon>Setting</v-btn>
