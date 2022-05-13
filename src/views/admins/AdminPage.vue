@@ -7,57 +7,30 @@
       <v-btn v-on:click="logout" color="red" class="white--text" >ログアウト</v-btn>
     </v-app-bar>
 
-<div v-if="statusCheck">
     <v-navigation-drawer app v-model="drawer" color="black" clipped>
       <div class="top-title">Menu</div>
       <v-list>
         <v-row class="vertical-spacer" justify="center">
-          <v-btn large class="menu-btn" v-on:click="subst0"><v-icon>mdi-human-handsdown</v-icon>MyPage</v-btn>
-        </v-row>
-         <v-row class="vertical-spacer" justify="center">
-             <v-btn large class="menu-btn" v-on:click="subst1"><v-icon>mdi-file </v-icon>LogPage</v-btn>
+          <v-btn large class="menu-btn" v-on:click="subst0"><v-icon>mdi-account</v-icon>UserPage</v-btn>
         </v-row>
         <v-row class="vertical-spacer" justify="center">
-          <v-btn large class="menu-btn" v-on:click="subst2"><v-icon>mdi-cog</v-icon>Setting</v-btn>
+          <v-btn large class="menu-btn" v-on:click="subst1"><v-icon>mdi-hamburger</v-icon>FoodPage</v-btn>
         </v-row>
       </v-list>
     </v-navigation-drawer>
-</div>
-
-<div v-else >
-    <v-navigation-drawer app v-model="drawer" color="black" clipped>
-      <div class="top-title">Menu</div>
-      <v-list>
-        <v-row class="vertical-spacer" justify="center">
-          <v-btn large class="menu-btn" v-on:click="subst4"><v-icon>mdi-account</v-icon>UserPage</v-btn>
-        </v-row>
-        <v-row class="vertical-spacer" justify="center">
-          <v-btn large class="menu-btn" v-on:click="subst5"><v-icon>mdi-hamburger</v-icon>FoodPage</v-btn>
-        </v-row>
-      </v-list>
-    </v-navigation-drawer>
-</div>
 
     <!-- v-mainはデフォルトで余白やその他スタイルが自動指定されてる -->
     <v-main class="pt-0 blue-grey lighten-4">
 
       <router-view>
         <div v-if="menuflag == 0" class="menu-bif">
-          <UserTop />
-        </div>
-        <div v-if="menuflag == 1" class="menu-bif">
-          <UserLog />
-        </div>
-        <div v-if="menuflag == 2" class="menu-bif">
-          <UserSet />
-        </div>
-        <div v-if="menuflag == 3" class="menu-bif">
           <UserPage />
         </div>
-        <div v-if="menuflag == 4" class="menu-bif">
+        <div v-else-if="menuflag == 1" class="menu-bif">
           <FoodPage />
         </div>
       </router-view>
+
     </v-main>
 
     <v-footer class="blue darken-4" dark app>
@@ -67,34 +40,20 @@
 </template>
 
 <script>
-import UserTop from '@/views/users/UserTop.vue'
-import UserLog from '@/views/users/UserLog.vue'
-import UserSet from '@/views/users/UserSet.vue'
-import FoodPage from '@/views/admins/AdminPage.vue'
 import UserPage from '@/views/admins/UserPage.vue'
-
+import FoodPage from '@/views/admins/FoodPage.vue'
 export default {
-  name: 'MyPage',
-  created: function() {
-    this.checkAdminStatus();
-  },
+  name: 'UserPage',
   components: {
-    UserTop,
-    UserLog,
-    UserSet,
     UserPage,
-    FoodPage
-    },
+    FoodPage,
+  },
   data: ()=> ({
     drawer: null,
     user: {},
     menuflag: 0,
-    adminStatus: false,
   }),
    computed: {
-     statusCheck: function() {
-      return this.adminStatus;
-     },
     getintakeCalorie: function() {
       return this.$store.state.intakeCalorie;
     },
@@ -103,42 +62,20 @@ export default {
     }
   },
   methods: {
-    checkAdminStatus(){
-      if (localStorage.emp_id == 0) {
-        this.adminStatus = false;
-      }
-      this.adminStaus = true;
-    },
     logout() {
       this.$store.dispatch("auth", {
         empId: '0',
         password: 'qazplm',
       });
-      localStorage.emp_id = null;
       this.$router.push('/login')
-    },
-    toUserLog() {
-      this.$router.push('/userlog')
     },
     subst0: function() {
       this.menuflag = 0;
-      this.$router.push('/usertop')
+      this.$router.push('/admin/userpage')
     },
     subst1: function() {
       this.menuflag = 1;
-      this.$router.push('/userlog')
-    },
-    subst2: function() {
-      this.menuflag = 2;
-      this.$router.push('/userset')
-    },
-    subst3: function() {
-      this.menuflag = 3;
-      this.$router.push('/userpage')
-    },
-    subst4: function() {
-      this.menuflag = 4;
-      this.$router.push('/foodpage')
+      this.$router.push('/admin/foodpage')
     },
     submit() {
       this.$store.dispatch("setcalo", {

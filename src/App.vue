@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="loginEmpId === '0' && loginPassword === 'qazplm'">
+    <!-- <div v-if="loginEmpId === '0' && loginPassword === 'qazplm'"> -->
       <div v-if="this.$route.path === '/'">
         <TopComp />
       </div>
@@ -10,21 +10,22 @@
       <div v-else-if="this.$route.path === '/login'">
         <LogIn />
       </div>
-      <div v-else-if="this.$route.path ==='/admin/login'">
+      <!-- <div v-else-if="this.$route.path ==='/admin/login'">
         <AdLogIn />
-      </div>
+      </div> -->
       <div v-else-if="this.$route.path === '/admin/userpage'">
         <UserPage />
       </div>
-    </div>
+      <div v-else-if="this.$route.path === '/admin/foodpage'">
+        <FoodPage />
+      </div>
 <!-- <div v-else-if="adminLoginId ==='1' && adminLoginPass ==='abc'">
 </div> -->
     <div v-else>
       <MyPage />
     </div>
-
-
   </div>
+<!-- </div> -->
 </template>
 
 <script>
@@ -32,8 +33,9 @@ import TopComp from '@/views/users/TopComp.vue'
 import MyPage from '@/views/users/MyPage.vue'
 import SignUp from '@/views/users/SignUp.vue'
 import LogIn from '@/views/users/LogIn.vue'
-import AdLogIn from '@/views/admins/AdLogIn.vue'
+// import AdLogIn from '@/views/admins/AdLogIn.vue'
 import UserPage from '@/views/admins/UserPage.vue'
+import FoodPage from '@/views/admins/FoodPage.vue'
 
 
 export default ({
@@ -47,8 +49,9 @@ export default ({
     MyPage,
     SignUp,
     LogIn,
-    AdLogIn,
+    // AdLogIn,
     UserPage,
+    FoodPage
   },
   computed: {
     loginEmpId() {

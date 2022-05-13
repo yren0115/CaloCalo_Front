@@ -6,7 +6,7 @@ import MyPage from '../views/users/MyPage.vue'
 import UserLog from '../views/users/UserLog.vue'
 import UserTop from '../views/users/UserTop.vue'
 import UserSet from '../views/users/UserSet.vue'
-import AdLogIn from '../views/admins/AdLogIn.vue'
+// import AdLogIn from '../views/admins/AdLogIn.vue'
 import UserPage from '../views/admins/UserPage.vue'
 import FoodPage from '../views/admins/FoodPage.vue'
 
@@ -43,11 +43,11 @@ const routes = [
     name: 'userset',
     component: UserSet
   },
-  {
-    path: '/admin/login',
-    name: 'adminLogin',
-    component: AdLogIn
-  },
+  // {
+  //   path: '/admin/login',
+  //   name: 'adminLogin',
+  //   component: AdLogIn
+  // },
   {
     path: '/admin/userpage',
     name: 'adminUserPage',
