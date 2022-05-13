@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <div v-if="loginEmpId === '0' && loginPassword === 'qazplm'">
       <div v-if="this.$route.path === '/'">
         <TopComp />
       </div>
@@ -16,7 +15,6 @@
       <div v-else-if="this.$route.path === '/admin/userpage'">
         <UserPage />
       </div>
-    </div>
 <!-- <div v-else-if="adminLoginId ==='1' && adminLoginPass ==='abc'">
 </div> -->
     <div v-else>
