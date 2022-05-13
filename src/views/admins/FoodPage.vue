@@ -15,7 +15,7 @@
                   <v-btn class="mr-4" v-on:click="postFood(); clear()">SUBMIT</v-btn>
                 </div>
             </v-form>
-            {{ foodData }}
+            {{ food_name }}
           </div>
           </v-col>
         </v-row>
