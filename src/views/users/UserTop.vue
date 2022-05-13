@@ -148,18 +148,6 @@ export default {
         vm.createFoodNameList(foodCaloDecObjList, vm.foodCaloMaxOrderList);
         var foodNameAcceObjList = vm.duplicateSortFoodObjListByNameAccending(vm.foodObjectList);
         vm.createFoodNameList(foodNameAcceObjList, vm.foodNameOrderList);
-// ############################# delete 
-        console.log(vm.foodCaloMaxOrderList);
-        console.log(vm.foodCaloMaxOrderList);
-
-        
-        
-        // vm.foodObjectList = response.data.food_list;
-        // for (var i = 0; i < vm.foodObjectList.length; i++) {
-        //   vm.foodList.push(vm.foodObjectList[i].food_name);
-        // }
-        // var caloAcceObjList = duplicateSortFoodObjListByCalorieAccending(vm.foodObjectList);
-        
       })
     },
 
