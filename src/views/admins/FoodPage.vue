@@ -6,10 +6,10 @@
             <v-form ref="form">
             <v-label><h1 class="left-title">食品登録ページ</h1></v-label>
               <v-label><h2 class="left-title-sub">食品名</h2></v-label>
-              <v-text-field label="食品名" placeholder="食品名を入力してください" outlined dense v-model="foodData.food_name">
+              <v-text-field label="食品名" placeholder="食品名を入力してください" outlined dense v-model="food_name">
               </v-text-field>
               <v-label><h2 class="left-title-sub">食品カロリー</h2></v-label>
-              <v-text-field label="食品カロリー" placeholder="食品カロリーを入力してください" outlined dense v-model="foodData.food_calorie">
+              <v-text-field label="食品カロリー" placeholder="食品カロリーを入力してください" outlined dense v-model="food_calorie">
               </v-text-field>
                 <div class="btn-container">
                   <v-btn class="mr-4" v-on:click="postFood(); clear()">SUBMIT</v-btn>
@@ -80,7 +80,10 @@ export default {
     },
     postFood() {
       axios
-      .post(BASE_URL+ADM_POSTFOOD_URL, this.foodData)
+      .post(BASE_URL+ADM_POSTFOOD_URL, {
+        "food_name": this.food_name,
+        "food_calorie": this.food_calorie,
+      })
       .then(function (response) {
         console.log(response)
       })
