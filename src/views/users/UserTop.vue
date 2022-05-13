@@ -141,11 +141,15 @@ export default {
       axios.get(BASE_URL + FOODS_URL)
       .then(function (response) {
         vm.foodObjectList = response.data.food_list;
+
         vm.createFoodNameList(vm.foodObjectList, vm.foodList);
+
         var foodCaloAcceObjList = vm.duplicateSortFoodObjListByCalorieAccending(vm.foodObjectList);
         vm.createFoodNameList(foodCaloAcceObjList, vm.foodCaloMinOrderList);
+
         var foodCaloDecObjList = foodCaloAcceObjList.reverse();
         vm.createFoodNameList(foodCaloDecObjList, vm.foodCaloMaxOrderList);
+
         var foodNameAcceObjList = vm.duplicateSortFoodObjListByNameAccending(vm.foodObjectList);
         vm.createFoodNameList(foodNameAcceObjList, vm.foodNameOrderList);
       })
