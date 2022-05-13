@@ -51,7 +51,7 @@ export default ({
     user: {},
     numValue: 0,
     menuflag: 0,
-    goalCalorie: 0,
+    goalCalorie: null,
     title: "",
     // inputRules: [
     //   v => !!v || '0以上の数値で入力してください',
