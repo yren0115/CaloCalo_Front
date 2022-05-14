@@ -13,11 +13,12 @@
               <v-label><h2 class="lower-title">目標カロリーを入力してください</h2></v-label>
               <v-form ref="form">
 
-                <v-textarea :rules="inputRules" solo height="200px" name="input-7-4" label="目標カロリーを入力" @input="validate" v-model.number="user.goalCalorie">
+                <!-- <v-textarea :rules="inputRules" solo height="200px" name="input-7-4" label="目標カロリーを入力" v-model.number="goalCalorie"> -->
+                <v-textarea solo height="200px" name="input-7-4" label="目標カロリーを入力" v-model.number="goalCalorie">
                 </v-textarea>
 
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="postGoalCalorie(PUT_URL); clear()">SUBMIT</v-btn>
+                  <v-btn class="mr-4" v-on:click="updateGoalCalorie(); clear()">SUBMIT</v-btn>
                 </div>
               </v-form>
             </div>
@@ -27,16 +28,17 @@
 </template>
 
 <script>
-// const SETTING_URL = '/mypage/setting/';
-// const DOMAINE = 'http://localhost:80/';
-// const CONTEXT_PATH = "calocalo/";
-
 import axios from "axios";
 
-// const BASE_URL = DOMAINE + CONTEXT_PATH;
-// BASE_URL + SETTING_URL + {emp_id}
+const PROTOCOLE = 'http://'
+const DOMAINE = 'localhost';
+const PORT = ':8000/'
+const CONTEXT_PATH = "calocalo/";
 
-const URL = "http://localhost:3000/goalcalories/1";
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+const SETTING_URL = `mypage/setting/`;
+
+
 // const EMPID = this.getempId;
 // const PUT_URL = URL + EMPID;
 
@@ -49,12 +51,12 @@ export default ({
     user: {},
     numValue: 0,
     menuflag: 0,
-    goalCalorie: 0,
+    goalCalorie: null,
     title: "",
-    inputRules: [
-      v => !!v || '0以上の数値で入力してください',
-      v => v.length <= 4 || '9999までの数値で入力してください',
-    ],
+    // inputRules: [
+    //   v => !!v || '0以上の数値で入力してください',
+    //   v => v.length <= 4 || '9999までの数値で入力してください',
+    // ],
   }),
    computed: {
      getempId: function() {
@@ -64,7 +66,7 @@ export default ({
       return this.$store.state.intakeCalorie;
     },
     getgoalCalorie: function() {
-      return this.$store.state.goalCalorie;
+      return this.goalCalorie;
     },
   },
   methods: {
@@ -79,24 +81,24 @@ export default ({
       });
     },
     validate() {
-      this.numValue = this.numValue.replace(/\D/g, '')
+      this.numValue = this.numValue.replace(/\D/g, '') // delete, 
     }, 
     clear() {
       this.$refs.form.reset();
     },
 
-    postGoalCalorie() {
-      // var rempId = this.getempId 
+    updateGoalCalorie() {
       axios
-      .put((URL), {
-        id: this.getempId,
-        goalcalorie: this.user.goalCalorie
+      .put(BASE_URL + SETTING_URL + localStorage.emp_id, {goal_calorie:this.goalCalorie})
+      .then(function(res){
+        console.log(res.data.success);
       })
+
     },
   },
   watch: {
       getgoalCalorie: function() {
-      this.goalCalorie()
+      this.goalCalorie
     },
   }
 });
