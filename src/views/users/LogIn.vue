@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { functionsIn } from "lodash";
+// import { functionsIn } from "lodash";
 
 const PROTOCOLE = 'http://'
 const DOMAINE = 'localhost';
