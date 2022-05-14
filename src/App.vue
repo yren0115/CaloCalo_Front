@@ -9,19 +9,17 @@
       <div v-else-if="this.$route.path === '/login'">
         <LogIn />
       </div>
-      <div v-else-if="this.$route.path ==='/admin/login'">
+      <div v-else-if="this.$route.path === '/admin/login'">
         <AdLogIn />
       </div>
-      <div v-else-if="this.$route.path === '/admin/userpage'">
-        <UserPage />
+      <div v-else>
+        <AdminPage />
       </div>
 <!-- <div v-else-if="adminLoginId ==='1' && adminLoginPass ==='abc'">
 </div> -->
     <div v-else>
       <MyPage />
-    </div>
-
-
+    </div> 
   </div>
 </template>
 
@@ -31,7 +29,7 @@ import MyPage from '@/views/users/MyPage.vue'
 import SignUp from '@/views/users/SignUp.vue'
 import LogIn from '@/views/users/LogIn.vue'
 import AdLogIn from '@/views/admins/AdLogIn.vue'
-import UserPage from '@/views/admins/UserPage.vue'
+import AdminPage from '@/views/admins/AdminPage.vue'
 
 
 export default ({
@@ -39,6 +37,7 @@ export default ({
   data: ()=> ({
     adminId: -100,
     adminPass: "admin",
+    adminStatus: false
   }),
   components: {
     TopComp,
@@ -46,9 +45,12 @@ export default ({
     SignUp,
     LogIn,
     AdLogIn,
-    UserPage,
+    AdminPage,
   },
   computed: {
+    adminStatusWatch(){
+      return this.adminStatus
+    },
     loginEmpId() {
       return this.$store.state.empId;
     },
