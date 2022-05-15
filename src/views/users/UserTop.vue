@@ -288,7 +288,7 @@ export default {
 .left-title-sub {
   color: black;
   text-align: center;
-  padding: 50px 0;
+  padding: 165px 0 50px;
 }
 .form-container {
   height: 90vh;

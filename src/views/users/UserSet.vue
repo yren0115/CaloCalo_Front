@@ -10,7 +10,7 @@
       <v-row lg="10" justify="center">
           <v-col cols="10">
             <div class="lower-container">
-              <v-label><h2 class="lower-title">目標カロリーを入力してください</h2></v-label>
+              <v-label><h2 class="lower-title">目標カロリーを再設定してください</h2></v-label>
               <v-form ref="form">
 
                 <!-- <v-textarea :rules="inputRules" solo height="200px" name="input-7-4" label="目標カロリーを入力" v-model.number="goalCalorie"> -->
