@@ -4,7 +4,7 @@
       <v-app-bar-nav-icon app color="white" v-on:click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="header-bar">CaloCalo</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn v-on:click="logout" color="red" class="white--text" >ログアウト</v-btn>
+      <v-btn v-on:click="logout" color="#B71C1C" class="white--text" >ログアウト</v-btn>
     </v-app-bar>
 
     <v-navigation-drawer app v-model="drawer" color="black" clipped>

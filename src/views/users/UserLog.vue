@@ -28,7 +28,7 @@
         <v-col cols="12">
             <div class="lower-container">
               <v-label><h2 class="lower-title">摂取カロリー評価</h2></v-label>
-              <v-sheet elevation="50" class="mx-auto" height="200" width="1090" rounded shaped>
+              <v-sheet elevation="50" class="mx-auto" height="200" width="1330" rounded shaped>
                 <h1 class="goal-cal-disp">{{ calculateCalorie }}</h1>
               </v-sheet>
             </div>
