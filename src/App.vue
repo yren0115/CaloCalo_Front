@@ -12,7 +12,10 @@
       <div v-else-if="this.$route.path === '/admin/login'">
         <AdLogIn />
       </div>
-      <div v-else-if="this.$route.path === '/admin/adminpage'">
+      <div v-else-if="this.$route.path === '/admin/userpage'">
+        <AdminPage />
+      </div>
+      <div v-else-if="this.$route.path === '/admin/foodpage'">
         <AdminPage />
       </div>
 <!-- <div v-else-if="adminLoginId ==='1' && adminLoginPass ==='abc'">

@@ -1,15 +1,15 @@
 <template>
   <v-container>
       <v-row lg="12" justify="center">
-        <v-col cols="6" class="left-col">
+        <v-col cols="7" class="left-col">
           <div class="form-container">
             <v-form ref="form">
             <v-label><h1 class="left-title">削除するユーザーのIDを入力してください</h1></v-label>
 
-              <v-text-field label="Outlined" placeholder="ユーザーIDを入力してください" outlined dense>
+              <v-text-field label="ユーザーID" placeholder="ユーザーIDを入力してください" outlined dense v-model.number="empId">
               </v-text-field>
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="submit">DELETE</v-btn>
+                  <v-btn class="mr-4" v-on:click="deleteEmp(); clear()">DELETE</v-btn>
                 </div>
               </v-form>
           </div>
@@ -21,7 +21,9 @@
 <script>
 import axios from "axios";
 
-const url = 'https://jsonplaceholder.typicode.com/users/'
+const URL = `http://localhost:8000/calocalo/admin/delete/employee/`;
+
+const param = {key: [1,2,3]}
 
 export default {
   name: 'UserTop',
@@ -31,6 +33,7 @@ export default {
     drawer: null,
     user: {},
     menuflag: 0,
+    empId: '',
     userId: '',
     userName: '',
   }),
@@ -61,23 +64,9 @@ export default {
     clear() {
       this.$refs.form.reset();
     },
-    getUserName() {
-      var vm = this
+    deleteEmp() {
       axios
-      .get(url + this.userId)
-      .then(function (response) {
-        vm.userName = response.data.name
-      }).catch(function () {
-        this.userName = "不正なユーザーID"
-      })
-    },
-    getCoinInfo() {
-      axios
-        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-        .then( response => this.info = response.data)
-        .catch(function () {
-          this.info = "不正なコイン情報です"
-        })
+      .delete(URL+this.empId, {data: param})
     },
   },
   watch: {
