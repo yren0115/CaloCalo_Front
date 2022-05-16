@@ -68,7 +68,7 @@ export default {
         empId: '0',
         password: 'qazplm',
       });
-      this.$router.push('/login')
+      this.$router.push('/admin/login')
     },
     toUserLog() {
       this.$router.push('/userlog')
