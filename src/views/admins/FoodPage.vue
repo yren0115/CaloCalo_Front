@@ -6,10 +6,10 @@
             <v-form ref="form">
             <v-label><h1 class="left-title">食品登録ページ</h1></v-label>
               <v-label><h2>食品名</h2></v-label>
-              <v-text-field label="Outlined" placeholder="食品名を入力してください" outlined dense>
+              <v-text-field label="Outlined" placeholder="食品名を入力してください" outlined dense v-model="foodName">
               </v-text-field>
               <v-label><h2>食品カロリー</h2></v-label>
-              <v-text-field label="Outlined" placeholder="食品カロリーを入力してください" outlined dense v-model.number="fooCalorie">
+              <v-text-field label="Outlined" placeholder="食品カロリーを入力してください" outlined dense v-model.number="calorieInput">
               </v-text-field>
                 <div class="btn-container">
                   <v-btn class="mr-4" v-on:click="submit">SUBMIT</v-btn>
@@ -24,7 +24,13 @@
 <script>
 import axios from "axios";
 
-const url = 'https://jsonplaceholder.typicode.com/users/'
+const PROTOCOLE = 'http://'
+const DOMAINE = 'localhost';
+const PORT = ':8000/'
+const CONTEXT_PATH = "calocalo/";
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+
+const ADMIN_ADD_FOOD_URL = 'admin/add/foodlist/';
 
 export default {
   name: 'UserTop',
@@ -36,6 +42,8 @@ export default {
     menuflag: 0,
     userId: '',
     userName: '',
+    foodName:null,
+    calorieInput:null
   }),
    computed: {
     getintakeCalorie: function() {
@@ -57,30 +65,11 @@ export default {
       this.$router.push('/userlog')
     },
     submit() {
-      this.$store.dispatch("setcalo", {
-        intakeCalorie: this.user.intakeCalorie,
-      });
-    },
+      var vm = this;
+      axios.post(BASE_URL + ADMIN_ADD_FOOD_URL, {food_name:vm.foodName , food_calorie:vm.calorieInput})
+      },
     clear() {
       this.$refs.form.reset();
-    },
-    getUserName() {
-      var vm = this
-      axios
-      .get(url + this.userId)
-      .then(function (response) {
-        vm.userName = response.data.name
-      }).catch(function () {
-        this.userName = "不正なユーザーID"
-      })
-    },
-    getCoinInfo() {
-      axios
-        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-        .then( response => this.info = response.data)
-        .catch(function () {
-          this.info = "不正なコイン情報です"
-        })
     },
   },
   watch: {
