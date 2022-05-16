@@ -12,7 +12,7 @@
               <v-text-field label="Outlined" placeholder="食品カロリーを入力してください" outlined dense v-model.number="calorieInput">
               </v-text-field>
                 <div class="btn-container">
-                  <v-btn class="mr-4" v-on:click="submit">SUBMIT</v-btn>
+                  <v-btn class="mr-4" v-on:click="submit; clear();">SUBMIT</v-btn>
                 </div>
             </v-form>
           </div>
