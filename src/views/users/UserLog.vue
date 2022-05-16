@@ -40,7 +40,8 @@
 <script>
 import axios from 'axios';
 const PROTOCOLE = 'http://'
-const DOMAINE = 'localhost';
+// const DOMAINE = 'localhost';
+const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
 const PORT = ':8000/'
 const CONTEXT_PATH = "calocalo/";
 const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;

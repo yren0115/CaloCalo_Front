@@ -47,7 +47,8 @@
 import axios from "axios";
 
 const PROTOCOLE = 'http://'
-const DOMAINE = 'localhost';
+// const DOMAINE = 'localhost';
+const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
 const PORT = ':8000/'
 const CONTEXT_PATH = "calocalo/";
 const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
@@ -206,7 +207,7 @@ export default {
             let foodObject = {
                 food_id:foodObjectList[i].food_id,
                 food_name:foodObjectList[i].food_name,
-                calorie:foodObjectList[i].calorie
+                calories:foodObjectList[i].calories
             }
             clonedObjList.push(foodObject);
         }
@@ -218,7 +219,7 @@ export default {
         let tmp;
         for (var i = 0; i < dupObjList.length - 1;i++){
             for (var j = i + 1; j < srcList.length; j++){
-                if (dupObjList[i].calorie > dupObjList[j].calorie){
+                if (dupObjList[i].calories > dupObjList[j].calories){
                     tmp = dupObjList[i];
                     dupObjList[i] = dupObjList[j];
                     dupObjList[j] = tmp;
@@ -232,7 +233,7 @@ export default {
         let tmp;
         for (var i = 0; i < dupObjList.length - 1;i++){
             for (var j = i + 1; j < dupObjList.length; j++){
-                if (dupObjList[i].name > dupObjList[j].name){
+                if (dupObjList[i].food_name > dupObjList[j].food_name){
                     tmp = dupObjList[i];
                     dupObjList[i] = dupObjList[j];
                     dupObjList[j] = tmp;
