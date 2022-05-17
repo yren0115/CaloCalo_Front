@@ -25,7 +25,7 @@ const PROTOCOLE = 'http://'
 // const DOMAINE = 'localhost';
 const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
 const PORT = ':8000/'
-const CONTEXT_PATH = "api/calocalo/";
+const CONTEXT_PATH = "calocalo/";
 const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 
 const ADMIN_DELETE_EMP_URL = 'admin/delete/employee/';

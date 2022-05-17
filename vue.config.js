@@ -3,11 +3,11 @@ module.exports = defineConfig({
   transpileDependencies: [
     'vuetify'
   ],
-  devServer: {
-    proxy: {
-        '/api/': {
-            target: 'http://appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com:8000'
-        }
-    }
-}
-})
+//   devServer: {
+//     proxy: {
+//         '/api/': {
+//             target: 'http://appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com:8000'
+//         }
+//     }
+// }
+});
