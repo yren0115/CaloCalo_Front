@@ -24,12 +24,12 @@
 <script>
 import axios from "axios";
 
-const PROTOCOLE = 'http://'
+// const PROTOCOLE = 'http://'
 // const DOMAINE = 'localhost';
-const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
-const PORT = ':8000/'
-const CONTEXT_PATH = "api/calocalo/";
-const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+// const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
+// const PORT = ':8000'
+const CONTEXT_PATH = "/api/calocalo/";
+// const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 
 const ADMIN_ADD_FOOD_URL = 'admin/add/foodlist/';
 
@@ -67,7 +67,7 @@ export default {
     },
     submit() {
       var vm = this;
-      axios.post(BASE_URL + ADMIN_ADD_FOOD_URL, {food_name:vm.foodName , food_calorie:vm.calorieInput})
+      axios.post(CONTEXT_PATH + ADMIN_ADD_FOOD_URL, {food_name:vm.foodName , food_calorie:vm.calorieInput})
       },
     clear() {
       this.$refs.form.reset();

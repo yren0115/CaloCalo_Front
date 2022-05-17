@@ -46,12 +46,12 @@
 <script>
 import axios from "axios";
 
-const PROTOCOLE = 'http://'
+// const PROTOCOLE = 'http://'
 // const DOMAINE = 'localhost';
-const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
-const PORT = ':8000/'
-const CONTEXT_PATH = "api/calocalo/";
-const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+// const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
+// const PORT = ':8000/'
+const CONTEXT_PATH = "/api/calocalo/";
+// const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 
 const FOODS_URL= `food_list/`;
 const EMP_GOAL_URL = `employee/info/`;
@@ -139,7 +139,7 @@ export default {
 
     fetchFoodList() {
       var vm = this
-      axios.get(BASE_URL + FOODS_URL)
+      axios.get(CONTEXT_PATH + FOODS_URL)
       .then(function (response) {
         vm.foodObjectList = response.data.food_list;
 
@@ -170,7 +170,7 @@ export default {
 
    fetchGoalCalories()  {
       var vm = this
-      axios.get(BASE_URL + EMP_GOAL_URL + localStorage.emp_id)
+      axios.get(CONTEXT_PATH + EMP_GOAL_URL + localStorage.emp_id)
       .then(function (response) {
         vm.goalCalorie = response.data.goal_calorie;
       })
@@ -184,14 +184,14 @@ export default {
     vm.setIntakeFood(vm.selectedFood)
     var calorieObj = {take_calorie: null, date: new Date().toISOString().substring(0,10)}
     calorieObj.take_calorie = this.food.calorie;
-    await axios.put(BASE_URL + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
+    await axios.put(CONTEXT_PATH + EMP_SUBMIT_RECORD_URL + localStorage.emp_id, calorieObj)
     await vm.fetchTotalCalorie();
     },
 
    fetchTotalCalorie(){
      var vm = this;
       var dateToday = {"date": new Date().toISOString().substring(0,10)}
-      axios.post(BASE_URL + EMP_INTAKE_CALO_URL + localStorage.emp_id, dateToday)
+      axios.post(CONTEXT_PATH + EMP_INTAKE_CALO_URL + localStorage.emp_id, dateToday)
       .then((res) => {
         var existence = res.data.existence;
         if (existence){

@@ -30,13 +30,13 @@
 <script>
 import axios from "axios";
 
-const PROTOCOLE = 'http://'
+// const PROTOCOLE = 'http://'
 // const DOMAINE = 'localhost';
-const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
-const PORT = ':8000/'
-const CONTEXT_PATH = "api/calocalo/";
+// const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
+// const PORT = ':8000/'
+const CONTEXT_PATH = "/api/calocalo/";
 
-const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+// const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 const SETTING_URL = `mypage/setting/`;
 
 
@@ -90,7 +90,7 @@ export default ({
 
     updateGoalCalorie() {
       axios
-      .put(BASE_URL + SETTING_URL + localStorage.emp_id, {goal_calorie:this.goalCalorie})
+      .put(CONTEXT_PATH + SETTING_URL + localStorage.emp_id, {goal_calorie:this.goalCalorie})
       .then(function(res){
         console.log(res.data.success);
       })
