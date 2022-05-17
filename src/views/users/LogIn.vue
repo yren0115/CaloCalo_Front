@@ -44,12 +44,12 @@
 <script>
 // import { functionsIn } from "lodash";
 
-const PROTOCOLE = 'http://'
+// const PROTOCOLE = 'http://'
 // const DOMAINE = 'localhost';
-const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
-const PORT = ':8000/'
-const CONTEXT_PATH = "calocalo/";
-const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+// const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
+// const PORT = ':8000/'
+const CONTEXT_PATH = "/api/calocalo/";
+// const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 
 const LOGIN_URL= `login/`;
 const ADMIN_CODE = 100;
@@ -87,7 +87,7 @@ export default {
       },
       loginAuth(loginInfo, emp_id) {
         var vm = this;
-        axios.post(BASE_URL+ LOGIN_URL + emp_id, loginInfo)
+        axios.post(CONTEXT_PATH + LOGIN_URL + emp_id, loginInfo)
         .then( res => {
           if (res.data.login_status){
             localStorage.emp_id = emp_id;

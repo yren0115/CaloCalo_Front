@@ -39,12 +39,12 @@
 
 <script>
 import axios from 'axios';
-const PROTOCOLE = 'http://'
+// const PROTOCOLE = 'http://'
 // const DOMAINE = 'localhost';
-const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
-const PORT = ':8000/'
-const CONTEXT_PATH = "api/calocalo/";
-const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+// const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
+// const PORT = ':8000/'
+const CONTEXT_PATH = "/api/calocalo/";
+// const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 
 const EMP_GOAL_URL = `employee/info/`;
 const EMP_INTAKE_CALO_URL = `employee/take_calorie/`;
@@ -94,7 +94,7 @@ export default ({
 
        fetchTotalCalorie(){
         var vm = this;
-        axios.post(BASE_URL + EMP_INTAKE_CALO_URL + localStorage.emp_id, 
+        axios.post(CONTEXT_PATH + EMP_INTAKE_CALO_URL + localStorage.emp_id, 
         {"date": this.logDate})
         .then((res) => {
         vm.recordExistence = res.data.existence;
@@ -110,7 +110,7 @@ export default ({
       
       fetchGoalCalories()  {
       var vm = this
-      axios.get(BASE_URL + EMP_GOAL_URL + localStorage.emp_id)
+      axios.get(CONTEXT_PATH + EMP_GOAL_URL + localStorage.emp_id)
       .then(function (response) {
         vm.goalCalorie = response.data.goal_calorie;
       })}, 
