@@ -42,12 +42,12 @@
 <script>
 import axios from "axios";
 
-// const PROTOCOLE = 'http://'
+const PROTOCOLE = 'http://'
 // const DOMAINE = 'localhost';
-// const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
-// const PORT = ':8000/'
-const CONTEXT_PATH = "/api/calocalo/";
-// const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
+const DOMAINE = 'appalb-calocalo-579011708.ap-northeast-1.elb.amazonaws.com';
+const PORT = ':8000/'
+const CONTEXT_PATH = "calocalo/";
+const BASE_URL = PROTOCOLE + DOMAINE + PORT + CONTEXT_PATH;
 
 const EMP_EXISTENCE_URL = `employee/check/`;
 const SIGNUP_URL= `signup/`;
@@ -73,14 +73,14 @@ export default {
       },
       createEmp: async function() {
         var vm = this;
-        await axios.get(CONTEXT_PATH + EMP_EXISTENCE_URL + vm.empId)
+        await axios.get(BASE_URL + EMP_EXISTENCE_URL + vm.empId)
         .then(function(res){
           vm.existence = res.data.existence;
         })
         if (!vm.existence){
           var EmpInfo = {emp_id:vm.empId , password:vm.password, goal_calories:vm.select}
           // create new Emp: should separate above axios excution;
-          await axios.post(CONTEXT_PATH + SIGNUP_URL, EmpInfo)
+          await axios.post(BASE_URL + SIGNUP_URL, EmpInfo)
           .then(function(res){
             vm.createSuccess = res.data.success;
           }
